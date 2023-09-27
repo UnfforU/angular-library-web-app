@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { LibraryComponent } from './library/library.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthorizationComponent
+    AuthorizationComponent,
+    LibraryComponent
   ],
   imports: [
     BrowserModule,

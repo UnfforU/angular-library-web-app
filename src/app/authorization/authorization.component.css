@@ -1,4 +1,4 @@
-.authorization-area {
+.logIn {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -17,32 +17,31 @@
     } 
 }
 
-.authorization-input {
-  display: inline-block;
-  vertical-align: middle;
+.logIn_card {
+    display: inline-block;
+    vertical-align: middle;
  
-  
-  border: solid;
-  border-color: rgb(103,58,183);
-  border-radius: 5px;
+    border: 0.3rem outset;
+    border-color: rgb(103,58,183);
+    border-radius: 5px;
 }
 
-.authorization-components {
-  margin: 10px;
+.logIn_card_components {
+    margin: 10px;
 }
 
-.input-blocks {
-  display: block;
-  margin-top: 5px;
-  margin-left: 20px;
-  margin-right: 20px;
+.logIn_input {
+    display: block;
+    margin-top: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
   
 }
-.button-logIn {
-  display: block;
-  margin-top: 20px;
-  margin-left: 175px;
-  position: relative;
-  max-width: 100px;
+.logIn_button {
+    display: block;
+    margin-top: 20px;
+    margin-left: 165px;
+    position: relative;
+    max-width: 100px;
 }
 

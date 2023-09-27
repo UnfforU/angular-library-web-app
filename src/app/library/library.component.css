@@ -1,0 +1,35 @@
+.header_main {
+    display: block;
+    min-height: 100px;
+    
+}
+
+.title {
+    padding: 20px 0px 15px 30px;
+}
+
+.books_and_libraries {
+    height: 100%;
+    display: flex;
+}
+
+.libraries_list {
+    min-width: 400px;
+    padding: 50px 20px 0px 30px;
+
+    border: 0.2rem outset;
+    border-color: rgba(104, 58, 183, 0.386);
+    border-radius: 5px;
+
+}
+
+.books_list {
+    padding: 50px 20px 0px 30px;
+}
+
+.book_card {
+    min-width: 700px;
+    margin-bottom: 20px;
+}
+
+
