@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 const MaterialComponents = [
@@ -17,6 +18,7 @@ const MaterialComponents = [
   MatListModule,
   MatSidenavModule,
   MatDialogModule,
+  MatGridListModule,
 
 ]
 

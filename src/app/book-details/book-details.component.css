@@ -1,4 +1,14 @@
 .book_details_page {
-    min-width: 800px;
-    min-height: 800px;
+    width: 800px;
+    height: auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 2em;
+}
+
+.author {
+    text-align: center;
+    font-size: 1em;
 }

@@ -1,4 +1,17 @@
-<div class="book_details_page">
-    <h1>book-details works!</h1>
-</div>
+<section class="book_details_page">
+    <div mat-dialog-title>
+        <h1 class="title">Harry Potter</h1>
+        <h4 class="author">Joanne Rowling</h4>
+    </div>
+    <div mat-dialog-content>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+            Hic sunt asperiores officiis corporis alias, aut obcaecati doloribus in id quas dicta, 
+            vitae animi blanditiis dolore voluptatibus! Rem quod consequuntur accusantium!
+        </p>
+    </div>
+    <mat-dialog-actions class="book_details_buttons" align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Book</button>
+    </mat-dialog-actions>
+</section>
 

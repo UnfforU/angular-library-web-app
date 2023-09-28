@@ -11,10 +11,16 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
   
 })
 export class LibraryComponent {
-  public constructor(public dialog: MatDialog) {}
+  public constructor(public dialog: MatDialog) {
+    //this.openBookDetails();
+  }
 
   protected openBookDetails(){
     console.log("open dialog");
-    this.dialog.open(BookDetailsComponent);
+    const dialogRef = this.dialog.open(BookDetailsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

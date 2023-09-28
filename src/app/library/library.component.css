@@ -1,15 +1,30 @@
 .header_main {
     display: block;
     min-height: 100px;
-    
 }
 
 .title {
-    padding: 20px 0px 15px 30px;
+    padding: 20px 0px 0px 2%;
+    display: inline-block;
+    width: 48%;
+    font-size: 30px;
 }
 
+
+.username {
+    padding: 20px 0px 0px 0px;
+    display: inline-block;
+    width: 48%;
+    text-align: right;
+}
+
+.logOut_button {
+    text-align: right;
+    margin: 0px 30px 10px 0px;
+}
+
+
 .books_and_libraries {
-    height: 100%;
     display: flex;
 }
 
@@ -20,7 +35,6 @@
     border: 0.2rem outset;
     border-color: rgba(104, 58, 183, 0.386);
     border-radius: 5px;
-
 }
 
 .books_list {

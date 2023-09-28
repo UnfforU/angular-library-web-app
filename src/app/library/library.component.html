@@ -1,9 +1,18 @@
 <header class="header_main">
-    <div class="title">
-        <h1>Web Library</h1>
-        <h4>UserName</h4>
+    <!-- <mat-grid-list cols="2" rowHeight="50px" class="title-list-elems">
+        <mat-grid-tile class="title_text">WebLibrary</mat-grid-tile>
+        <mat-grid-tile rowspan="2">
+            <button mat-raised-button>Log Out</button>
+        </mat-grid-tile>
+        <mat-grid-tile >UserName</mat-grid-tile>
+    </mat-grid-list> -->
+    <p class="title">Web Library</p>
+    <p class="username">UserName</p>    
+    <div class="logOut_button"> 
+        <button mat-raised-button >Log out</button>
     </div>
 </header>
+<mat-divider></mat-divider>
 
 <!-- <mat-sidenav-container class="books_and_libraries">
     <mat-sidenav 
@@ -22,7 +31,6 @@
         
     </mat-sidenav-content>
 </mat-sidenav-container> -->
-
 
 <section class="books_and_libraries">
     <div class="libraries_list">
@@ -49,7 +57,6 @@
             </mat-card-content>
             <mat-card-actions align="end">
                 <button mat-button>MORE</button>
-                <button mat-button>BOOK</button>
               </mat-card-actions>
         </mat-card> 
 
@@ -63,10 +70,7 @@
             </mat-card-content>
             <mat-card-actions align="end">
                 <button mat-button (click)="openBookDetails()">MORE</button>
-                <button mat-button>BOOK</button>
               </mat-card-actions>
         </mat-card> 
     </div>
-
-    
 </section>
