@@ -3,10 +3,19 @@
     height: auto;
 }
 
-.title {
+.title_block {
+    display: block;
     text-align: center;
-    font-size: 2em;
+    margin-bottom: 5px;
 }
+
+.title {
+    font-size: 2em;
+    display: inline-block;
+    margin-right: 20px;
+    
+}
+
 
 .author {
     text-align: center;

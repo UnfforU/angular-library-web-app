@@ -6,16 +6,22 @@
 .title {
     padding: 20px 0px 0px 2%;
     display: inline-block;
-    width: 48%;
+    text-align: left;
+    width: 49%;
     font-size: 30px;
 }
 
 
+.main_header_block {
+    width: 100%;
+    text-align: center;
+}
+
 .username {
-    padding: 20px 0px 0px 0px;
+    padding: 20px 2% 0px 0px;
     display: inline-block;
-    width: 48%;
     text-align: right;
+    width: 49%;
 }
 
 .logOut_button {

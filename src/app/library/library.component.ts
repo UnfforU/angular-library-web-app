@@ -12,7 +12,7 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 })
 export class LibraryComponent {
   public constructor(public dialog: MatDialog) {
-    //this.openBookDetails();
+    this.openBookDetails();
   }
 
   protected openBookDetails(){
