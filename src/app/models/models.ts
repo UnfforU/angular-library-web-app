@@ -4,3 +4,8 @@ export interface Library {
     isDeleted: boolean;
     // books[]: Book[];
 }
+
+export interface Login {
+    username: string;
+    password: string
+}

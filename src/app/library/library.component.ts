@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 import { Library } from '../models/models';
 import { LibraryService } from '../services/library.service';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -18,13 +19,18 @@ export class LibraryComponent implements OnInit {
 
   public constructor(
     public dialog: MatDialog,
-    private libraryService: LibraryService
+    private libraryService: LibraryService,
+    private authService: AuthService
   ) {
     // this.openBookDetails();
   }
 
   public ngOnInit(): void {
     this.getLibraries();
+  }
+
+  public logOut(): void {
+    this.authService.logOut();
   }
 
   protected openBookDetails(): void {
