@@ -35,12 +35,22 @@
 }
 
 .libraries_list {
-    min-width: 400px;
+    width: 400px;
     padding: 50px 20px 0px 30px;
 
     border: 0.2rem outset;
-    border-color: rgba(104, 58, 183, 0.386);
+    border-color: rgb(103,58,183);
     border-radius: 5px;
+}
+
+.libraries_list_title_button {
+    display: block;
+}
+
+.libraries_list_title {
+    display: inline;
+    vertical-align:text-bottom;
+    margin-right: 10px;
 }
 
 .books_list {
@@ -51,5 +61,3 @@
     min-width: 700px;
     margin-bottom: 20px;
 }
-
-

@@ -21,6 +21,22 @@ export class LibraryService {
     private http: HttpClient
   ) { }
 
+  public addLibrary(item: Library): Observable<Library> {
+    return this.http.post<Library>(this.RepositoryUrl, item, this.httpOptions)
+      .pipe(
+        tap((library: Library) => console.log(`added library w/ id=${library.libraryId}`)),
+        catchError(this.handleError<Library>('addLibrary'))
+      )
+  } 
+
+  public deleteLibrary(guid: string): Observable<Library[]> {
+    return this.http.delete<Library[]>(`${this.RepositoryUrl}/${guid}`, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`deleted library guid={${guid}}`)),
+        catchError(this.handleError<Library[]>('deleteLibrary'))
+      )
+  }
+
   public getLibraries(): Observable<Library[]> {
     return this.http.get<Library[]>(this.RepositoryUrl)
       .pipe(

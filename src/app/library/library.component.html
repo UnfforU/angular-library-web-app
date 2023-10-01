@@ -39,10 +39,47 @@
 
 <section class="books_and_libraries">
     <div class="libraries_list">
-        <h1>Libraries</h1>
+        <div class="libraries_list_title_button">
+            <h1 class="libraries_list_title">Libraries</h1>
+            <button 
+                mat-icon-button
+                (click)="createNewLibrary()"
+            >
+                <mat-icon>add_circle_outline</mat-icon>
+            </button>
+        </div>
+    
+        <div *ngIf="newLibrary">
+            <mat-form-field>
+                <mat-label>Enter library name</mat-label>
+                <input matInput type="text" [(ngModel)]="newLibrary.name">
+                <button 
+                    mat-icon-button
+                    (click)="addLibrary()"
+                    matSuffix 
+                    aria-label="Add" 
+                >
+                  <mat-icon>check</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
         
+
         <mat-action-list *ngFor="let library of libraries" role="libraries" >
-            <mat-list-item>{{library.name}}</mat-list-item>
+            <mat-list-item >
+                <div matListItemTitle>{{library.name}}</div>
+                <div matListItemMeta>
+                    <!-- <button mat-icon-button>
+                        <mat-icon>change</mat-icon>
+                    </button> -->
+                    <button 
+                        mat-icon-button
+                        (click)="deleteLibrary(library)"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-list-item>     
             <mat-divider></mat-divider>
         </mat-action-list>
     </div>
