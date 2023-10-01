@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
+import { Library } from '../models/models';
+import { LibraryService } from '../services/library.service';
 
 
 @Component({
@@ -11,9 +13,30 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
   
 })
 export class LibraryComponent {
-  public constructor(public dialog: MatDialog) {
+  protected libraries: Library[] = [];
+
+  public constructor(
+    public dialog: MatDialog,
+    private libraryService: LibraryService
+  ) {
     this.openBookDetails();
   }
+
+  public ngOnInit(): void {
+    this.getLibraries();
+  }
+
+  private getLibraries(): void {
+    this.libraryService.getLibraries()
+      .subscribe(
+        libraries => {
+          this.libraries = libraries,
+          console.log(this.libraries);
+        }
+      );
+
+    console.log(this.libraries);
+  } 
 
   protected openBookDetails(){
     console.log("open dialog");

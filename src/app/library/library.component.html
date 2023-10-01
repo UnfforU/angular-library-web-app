@@ -41,12 +41,9 @@
     <div class="libraries_list">
         <h1>Libraries</h1>
         
-        <mat-action-list role="libraries" >
-            <mat-list-item>Library1</mat-list-item>
+        <mat-action-list *ngFor="let library of libraries" role="libraries" >
+            <mat-list-item>{{library.name}}</mat-list-item>
             <mat-divider></mat-divider>
-            <mat-list-item>Library2</mat-list-item>
-            <mat-divider></mat-divider>
-            <mat-list-item>Library3</mat-list-item>
         </mat-action-list>
     </div>
     
