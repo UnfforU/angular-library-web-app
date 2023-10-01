@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class AuthorizationComponent {
   
   public correctLogin: boolean = false;
+  public hidePassword: boolean = true;
+
   public constructor(
     private router: Router,
     private authService: AuthService
