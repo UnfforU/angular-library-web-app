@@ -1,0 +1,57 @@
+<div class="books_list" >
+    <div class="books_list_title_button">
+        <h1 class="books_list_title">Books</h1>
+        <button 
+            mat-icon-button
+            (click)="addBook()"
+        >
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
+        <form *ngIf="!addBookFormHidden" class="addBook_form">
+            <mat-form-field class="addBook_input">
+                <mat-label>Name of Book</mat-label>
+                <input matInput value="" #title>
+            </mat-form-field>
+            <mat-form-field class="addBook_input">
+                <mat-label>Author</mat-label>
+                <input matInput value="" #author>
+            </mat-form-field>
+            <mat-form-field class="addBook_input">
+                <mat-label>Description</mat-label>
+                <textarea  matInput value="" #description></textarea>
+            </mat-form-field>
+
+            <button 
+                mat-raised-button
+                (click)="saveNewBook(title.value, author.value, description.value)"
+                color="primary">Save</button>
+        </form>
+    </div>
+
+
+    <mat-card class="book_card">
+        <mat-card-header>
+          <mat-card-title>Harry Potter</mat-card-title>
+          <mat-card-subtitle>Joanne Rowling</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias rem</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button >MORE</button>
+          </mat-card-actions>
+    </mat-card> 
+
+    <mat-card class="book_card">
+        <mat-card-header>
+          <mat-card-title>Harry Potter</mat-card-title>
+          <mat-card-subtitle>Joanne Rowling</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias rem</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button (click)="openBookDetails()">MORE</button>
+          </mat-card-actions>
+    </mat-card> 
+</div>

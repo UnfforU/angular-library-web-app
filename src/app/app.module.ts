@@ -14,6 +14,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
 import { REPOS_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment.development';
 import { ACCESS_TOKEN_KEY } from './services/auth.service';
+import { BooksComponent } from './books/books.component';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -34,7 +35,8 @@ export function tokenGetter() {
     AppComponent,
     AuthorizationComponent,
     LibraryComponent,
-    BookDetailsComponent
+    BookDetailsComponent,
+    BooksComponent
   ],
   
   imports: [

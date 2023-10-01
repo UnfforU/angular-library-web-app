@@ -18,7 +18,6 @@ export class LibraryComponent implements OnInit {
   public newLibrary: Library | null = null;
 
   public constructor(
-    public dialog: MatDialog,
     private libraryService: LibraryService,
     private authService: AuthService
   ) {
@@ -33,14 +32,7 @@ export class LibraryComponent implements OnInit {
     this.authService.logOut();
   }
 
-  protected openBookDetails(): void {
-    console.log("open dialog");
-    const dialogRef = this.dialog.open(BookDetailsComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+  
 
   protected createNewLibrary(): void {
     if(!this.newLibrary){
