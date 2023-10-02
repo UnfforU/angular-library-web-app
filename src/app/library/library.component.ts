@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
-import { Library, Book } from '../models/models';
+import { Library, Book, User } from '../models/models';
 import { LibraryService } from '../services/library.service';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
+import { JwtService } from '../services/jwt.service';
 
 
 @Component({
@@ -20,16 +21,28 @@ export class LibraryComponent implements OnInit {
   public chosenBooks: Book[] = [];
   public currLibrary: Library  = this.libraries[0];
 
+  protected user: User;
+
+
   public constructor(
     private libraryService: LibraryService,
     private authService: AuthService,
     private bookService: BookService,
+    private jwtService: JwtService
   ) {
-    // this.openBookDetails();
+    this.user = {} as User;
+    if(jwtService.decodedToken){
+      this.user = {
+        userId: jwtService.decodedToken.userId,
+        userName: jwtService.decodedToken.name,
+        isAdmin: jwtService.decodedToken.isAdmin
+      } as User;
+    }
   }
 
   public ngOnInit(): void {
     this.getLibraries();
+    console.log("token:");
   }
 
   public logOut(): void {

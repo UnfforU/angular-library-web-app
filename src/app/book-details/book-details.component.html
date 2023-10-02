@@ -21,8 +21,16 @@
         </div>
 
         <mat-dialog-actions class="book_details_buttons" align="end">
-            <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Book</button>
+            <button mat-button mat-dialog-close>Back</button>
+            <button 
+                mat-raised-button 
+                color="primary" 
+                [mat-dialog-close]="true" 
+                cdkFocusInitial
+                (click)="serveBook(book)"
+            >
+                Book
+            </button>
         </mat-dialog-actions>
     </div>
 

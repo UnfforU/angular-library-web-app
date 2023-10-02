@@ -50,6 +50,12 @@ export class BookDetailsComponent {
 
   protected revertChanges(): void{
     this.book = this.oldVersionBook;
+    this.updateBookFormHidden = true;
   }
 
+  protected serveBook(book: Book): void {
+    book.isBooked = true;
+    book.bookedDate = 
+    book.ownerId = 
+  }
 }

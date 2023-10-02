@@ -16,13 +16,13 @@
     
 }
 
-
 .author {
     text-align: center;
     font-size: 1em;
 }
 
 .updateBook_form {
+    margin-top: 20px;
     width: 100%;
     text-align: center;
 }
@@ -33,7 +33,7 @@
 }
 
 .updateBook_button {
-    width: 50%;
+    width: 30%;
     display: inline-block;
-    margin-bottom: 10px;
+    margin: 0px 5px 10px 5px;
 }
