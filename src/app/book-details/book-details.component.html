@@ -1,19 +1,81 @@
 <section *ngIf="book" class="book_details_page">
-    <div mat-dialog-title>
+    <div *ngIf="updateBookFormHidden" mat-dialog-title>
         <div class="title_block">
             
             <p class="title">{{book.name}}</p>
-            <button mat-button class="chagne_button">Change</button>
+            <button 
+                mat-icon-button 
+                class="chagne_button"
+                (click)="useUpdateMode()"
+            >
+                <mat-icon>
+                    edit
+                </mat-icon>
+            </button>
         </div>
         
         <h4 class="author">{{book.authorName}}</h4>
+
+        <div mat-dialog-content>
+            <p>{{book.description}}</p>
+        </div>
+
+        <mat-dialog-actions class="book_details_buttons" align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Book</button>
+        </mat-dialog-actions>
     </div>
-    <div mat-dialog-content>
-        <p>{{book.description}}</p>
-    </div>
-    <mat-dialog-actions class="book_details_buttons" align="end">
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Book</button>
-    </mat-dialog-actions>
+
+    <form 
+        *ngIf="!updateBookFormHidden" 
+        [formGroup]="updateBookForm"
+        class="updateBook_form"
+    >
+        <mat-form-field class="updateBook_input">
+            <mat-label>Name of Book</mat-label>
+            <input 
+                matInput 
+                formControlName="title"
+                [(ngModel)]="book.name"
+                required/>
+        </mat-form-field>
+        <mat-form-field class="updateBook_input" >
+            <mat-label>Author</mat-label>
+            <input 
+                matInput 
+                formControlName="author"
+                [(ngModel)]="book.authorName" 
+                required
+            />
+        </mat-form-field>
+        <mat-form-field class="updateBook_input">
+            <mat-label>Description</mat-label>
+            <textarea  
+                matInput 
+                formControlName="description"
+                [(ngModel)]="book.description"
+                required
+            >
+            </textarea>
+        </mat-form-field>
+
+        <button 
+            [disabled]="!updateBookForm.valid"
+            (click)="revertChanges()"
+            mat-raised-button
+            class="updateBook_button"
+        >
+            back
+        </button>
+        <button 
+            [disabled]="!updateBookForm.valid"
+            (click)="saveUpdateChanges()"
+            mat-raised-button
+            color="primary"
+            class="updateBook_button"
+        >
+            Save
+        </button>
+    </form>
 </section>
 

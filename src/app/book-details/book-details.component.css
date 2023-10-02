@@ -21,3 +21,19 @@
     text-align: center;
     font-size: 1em;
 }
+
+.updateBook_form {
+    width: 100%;
+    text-align: center;
+}
+
+.updateBook_input {
+    width: 80%;
+    height: auto;
+}
+
+.updateBook_button {
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 10px;
+}

@@ -45,6 +45,14 @@ export class BookService {
       )
   }
   
+  public updateBook(book: Book): Observable<Book> {
+    return this.http.put<Book>(`${this.reposUrl}/Book/${book.bookId}`, book, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`updated book id=${book.bookId}`)),
+        catchError(this.handleError<Book>('updateBook'))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
