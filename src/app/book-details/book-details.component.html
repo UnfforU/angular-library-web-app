@@ -4,6 +4,7 @@
             
             <p class="title">{{book.name}}</p>
             <button 
+                *ngIf="isAdmin"
                 mat-icon-button 
                 class="chagne_button"
                 (click)="useUpdateMode()"
@@ -18,6 +19,11 @@
 
         <div mat-dialog-content>
             <p>{{book.description}}</p>
+            <mat-divider></mat-divider>
+            <p *ngIf="book.isBooked">Book was booked in: {{book.bookedDate | date }}</p>
+        </div>
+        <div>
+
         </div>
 
         <mat-dialog-actions class="book_details_buttons" align="end">
@@ -25,6 +31,7 @@
             <button 
                 mat-raised-button 
                 color="primary" 
+                [disabled]="book.isBooked"
                 [mat-dialog-close]="true" 
                 cdkFocusInitial
                 (click)="serveBook(book)"

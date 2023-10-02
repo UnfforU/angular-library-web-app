@@ -41,8 +41,8 @@ export class LibraryService {
   public getLibraries(): Observable<Library[]> {
     return this.http.get<Library[]>(`${this.reposUrl}/library`)
       .pipe(
-        tap(_ => console.log('fetched heroes')),
-        catchError(this.handleError<Library[]>('getHeroes', []))
+        tap(_ => console.log('fetched libraries')),
+        catchError(this.handleError<Library[]>('getLibrary', []))
       )
   }
 

@@ -7,6 +7,7 @@ import { LibraryService } from '../services/library.service';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 import { JwtService } from '../services/jwt.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -28,16 +29,13 @@ export class LibraryComponent implements OnInit {
     private libraryService: LibraryService,
     private authService: AuthService,
     private bookService: BookService,
-    private jwtService: JwtService
+    private userService: UserService
   ) {
-    this.user = {} as User;
-    if(jwtService.decodedToken){
-      this.user = {
-        userId: jwtService.decodedToken.userId,
-        userName: jwtService.decodedToken.name,
-        isAdmin: jwtService.decodedToken.isAdmin
-      } as User;
-    }
+
+   
+    this.user = this.userService.currUser;
+
+    console.log(`const library ${this.user}`);
   }
 
   public ngOnInit(): void {
@@ -101,5 +99,8 @@ export class LibraryComponent implements OnInit {
     console.log(this.libraries);
   } 
 
+  public onNotifyBookCollectionChanged(): void {
+    this.getLibraries();
+  }
   
 }

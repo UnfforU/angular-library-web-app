@@ -41,6 +41,7 @@
         <div class="libraries_list_title_button">
             <h1 class="libraries_list_title">Libraries</h1>
             <button 
+                *ngIf="user.isAdmin"
                 mat-icon-button
                 (click)="createNewLibrary()"
             >
@@ -48,7 +49,7 @@
             </button>
         </div>
     
-        <div *ngIf="newLibrary">
+        <div *ngIf="newLibrary && user.isAdmin">
             <mat-form-field>
                 <mat-label>Enter library name</mat-label>
                 <input matInput type="text" [(ngModel)]="newLibrary.name">
@@ -74,6 +75,7 @@
                         <mat-icon>change</mat-icon>
                     </button> -->
                     <button 
+                        *ngIf="user.isAdmin"
                         mat-icon-button
                         (click)="deleteLibrary(library)"
                     >
@@ -88,6 +90,7 @@
     <app-books
         [books]="chosenBooks"
         [currLibrary]="currLibrary"
+        (notifyBookCollectionChanged)="onNotifyBookCollectionChanged()"
     >
     </app-books>
 </section>

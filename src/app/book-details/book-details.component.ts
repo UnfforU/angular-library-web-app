@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Book } from '../models/models';
 import { BookService } from '../services/book.service';
+import { UserService } from '../services/user.service';
 
 
 @Component({
@@ -14,8 +15,10 @@ import { BookService } from '../services/book.service';
 })
 export class BookDetailsComponent {
   public book?: Book;
-  
+  public bookedPeriodEnds: Date = new Date();
   public oldVersionBook?: Book;
+  
+  public isAdmin: boolean | undefined = this.userService.currUser?.isAdmin;
 
   protected updateBookFormHidden = true;
 
@@ -27,9 +30,11 @@ export class BookDetailsComponent {
   
   constructor(
     @Inject(MAT_DIALOG_DATA) injectBook: Book,
-    private bookService: BookService
+    private bookService: BookService,
+    private userService: UserService,
   ){
     this.book = injectBook;
+    
   }
 
   protected useUpdateMode(): void {
@@ -55,7 +60,15 @@ export class BookDetailsComponent {
 
   protected serveBook(book: Book): void {
     book.isBooked = true;
-    book.bookedDate = 
-    book.ownerId = 
+    book.bookedDate = new Date();
+    book.ownerId = this.userService.currUser.userId;
+
+    console.log("serveBook");
+    console.log(book);
+
+    this.bookService.updateBook(book)
+        .subscribe(book => {
+          console.log(book);
+        })
   }
 }

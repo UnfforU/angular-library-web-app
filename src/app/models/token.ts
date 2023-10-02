@@ -3,8 +3,8 @@ export interface Token {
 }
 
 export interface DecodedToken {
-    userId: string;
-    isAdmin: boolean;
+    sub: string;
+    isAdmin: string;
     name: string;
     exp: number;
 }

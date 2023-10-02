@@ -11,13 +11,21 @@ export class JwtService {
 
   public decodedToken: DecodedToken | null;
 
-  constructor() 
+  public constructor() 
   { 
-    this.decodedToken = this.decodeToken()
+    this.decodedToken = this.decodeToken();
+  }
+
+  public onInit():void {
+
+    console.log('constructor decode');
+    this.decodedToken = this.decodeToken();
+    console.log(this.decodedToken);
   }
 
   private decodeToken(): DecodedToken | null {
     let token = localStorage.getItem(ACCESS_TOKEN_KEY);
+
     if(token){
       return jwt_decode(token);
     }

@@ -11,6 +11,7 @@
 
 .books_list {
     padding: 50px 20px 0px 30px;
+    display: block;
 }
 
 .book_card {

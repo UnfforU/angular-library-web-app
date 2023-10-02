@@ -2,6 +2,7 @@
     <div class="books_list_title_button">
         <h1 class="books_list_title">Books</h1>
         <button 
+            *ngIf="user.isAdmin"
             mat-icon-button
             (click)="addBook()"
         >
@@ -48,8 +49,9 @@
 
     <mat-card *ngFor="let book of books" class="book_card">
         <mat-card-header>
-            <mat-card-title>{{book.name}}
-            
+            <mat-card-title >
+                    {{book.name}}
+                    <mat-icon *ngIf="book.isBooked">bookmark</mat-icon>
             </mat-card-title>
             <mat-card-subtitle>{{book.authorName}}</mat-card-subtitle>
         </mat-card-header>
@@ -58,13 +60,15 @@
         </mat-card-content>
         <mat-card-actions align="end">
             <button 
-              mat-icon-button 
-              (click)="deleteBook(book.bookId)"
+                *ngIf="user.isAdmin"
+                mat-icon-button 
+                (click)="deleteBook(book.bookId)"
             >
                 <mat-icon>delete</mat-icon>
             </button>
             <button 
-              mat-button 
+              mat-raised-button
+              color="primary" 
               (click)="openBookDetails(book)"
             >
               MORE

@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
-import { Book, Library } from '../models/models';
+import { Book, Library, User } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-books',
@@ -15,8 +16,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class BooksComponent {
   @Input() books : Book[] = [];
   @Input() currLibrary?: Library;
+  @Output() notifyBookCollectionChanged = new EventEmitter();
 
   public addBookFormHidden: boolean = true;
+
+  public user: User;
 
   public addBookForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -27,7 +31,9 @@ export class BooksComponent {
   public constructor(
     public dialog: MatDialog,
     private bookService: BookService,
+    private userService: UserService
   ){
+    this.user = this.userService.currUser
   }
 
   protected openBookDetails(chosenBook: Book): void {
@@ -68,10 +74,12 @@ export class BooksComponent {
   }
 
   protected deleteBook(bookId: string): void {
+    console.log(bookId);
     this.bookService.deleteBook(bookId)
       .subscribe(books => {
         console.log(books);
         this.books = books;
+        this.notifyBookCollectionChanged.emit(); 
       })
   }
 }
