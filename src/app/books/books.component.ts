@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
-import { Book } from '../models/models';
+import { Book, Library } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,6 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class BooksComponent {
   @Input() books : Book[] = [];
+  @Input() currLibrary?: Library;
 
   public addBookFormHidden: boolean = true;
 
@@ -46,7 +47,6 @@ export class BooksComponent {
   }
 
   protected addBook(): void {
-    console.log(this.books);
     this.addBookFormHidden = !this.addBookFormHidden;
   }
 
@@ -55,7 +55,7 @@ export class BooksComponent {
       name: title,
       authorName: author,
       description: description,
-      libraryId: "B91A70B5-493A-4038-B7AB-08DBC2CCCB35", //
+      libraryId: this.currLibrary?.libraryId, //
       ownerId: "59729847-C8BA-42FD-8938-353B5DDC005A" //
     } as Book
 
@@ -65,5 +65,13 @@ export class BooksComponent {
         this.books.push(book);
         this.addBookFormHidden = !this.addBookFormHidden;
     })
+  }
+
+  protected deleteBook(bookId: string): void {
+    this.bookService.deleteBook(bookId)
+      .subscribe(books => {
+        console.log(books);
+        this.books = books;
+      })
   }
 }

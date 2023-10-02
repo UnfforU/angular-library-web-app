@@ -1,4 +1,4 @@
-<div class="books_list" >
+<div  *ngIf="currLibrary" class="books_list" >
     <div class="books_list_title_button">
         <h1 class="books_list_title">Books</h1>
         <button 
@@ -24,7 +24,8 @@
                   formControlName="author"
                   value="" 
                   #author 
-                  required/>
+                  required
+                />
             </mat-form-field>
             <mat-form-field class="addBook_input">
                 <mat-label>Description</mat-label>
@@ -47,18 +48,27 @@
 
     <mat-card *ngFor="let book of books" class="book_card">
         <mat-card-header>
-          <mat-card-title>{{book.name}}</mat-card-title>
-          <mat-card-subtitle>{{book.authorName}}</mat-card-subtitle>
+            <mat-card-title>{{book.name}}
+            
+            </mat-card-title>
+            <mat-card-subtitle>{{book.authorName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>{{book.description}}</p>
+            <p>{{book.description}}</p>
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-button 
+            <button 
+              mat-icon-button 
+              (click)="deleteBook(book.bookId)"
+            >
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button 
+              mat-button 
               (click)="openBookDetails(book)"
             >
-            MORE
-          </button>
-          </mat-card-actions>
+              MORE
+            </button>
+        </mat-card-actions>
     </mat-card> 
 </div>

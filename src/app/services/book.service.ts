@@ -36,6 +36,14 @@ export class BookService {
       catchError(this.handleError<Book[]>('getBooksById', []))
     );
   }
+
+  public deleteBook(bookId: string): Observable<Book[]> {
+    return this.http.delete<Book[]>(`${this.reposUrl}/Book/${bookId}`, this.httpOptions)
+      .pipe(
+        tap(_ => console.log(`deleted book guid={${bookId}}`)),
+        catchError(this.handleError<Book[]>('deleteBook'))
+      )
+  }
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

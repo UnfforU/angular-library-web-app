@@ -18,6 +18,7 @@ export class LibraryComponent implements OnInit {
   protected libraries: Library[] = [];
   public newLibrary: Library | null = null;
   public chosenBooks: Book[] = [];
+  public currLibrary: Library  = this.libraries[0];
 
   public constructor(
     private libraryService: LibraryService,
@@ -36,6 +37,7 @@ export class LibraryComponent implements OnInit {
   }
 
   public chooseLibrary(library: Library): void{
+    this.currLibrary = library;
     console.log(library);
     this.bookService.getBooksByLibraryId(library.libraryId)
       .subscribe(books => {
