@@ -66,8 +66,10 @@
         
 
         <mat-action-list *ngFor="let library of libraries" role="libraries" >
-            <mat-list-item >
-                <div matListItemTitle>{{library.name}}</div>
+            <mat-list-item (click)="chooseLibrary(library)">
+                
+                    {{library.name}}
+                
                 <div matListItemMeta>
                     <!-- <button mat-icon-button>
                         <mat-icon>change</mat-icon>
@@ -84,5 +86,8 @@
         </mat-action-list>
     </div>
     
-    <app-books></app-books>
+    <app-books
+        [books]="chosenBooks"
+    >
+    </app-books>
 </section>

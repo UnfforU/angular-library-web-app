@@ -1,18 +1,15 @@
-<section class="book_details_page">
+<section *ngIf="book" class="book_details_page">
     <div mat-dialog-title>
         <div class="title_block">
             
-            <p class="title">Harry Potter</p>
+            <p class="title">{{book.name}}</p>
             <button mat-button class="chagne_button">Change</button>
         </div>
         
-        <h4 class="author">Joanne Rowling</h4>
+        <h4 class="author">{{book.authorName}}</h4>
     </div>
     <div mat-dialog-content>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Hic sunt asperiores officiis corporis alias, aut obcaecati doloribus in id quas dicta, 
-            vitae animi blanditiis dolore voluptatibus! Rem quod consequuntur accusantium!
-        </p>
+        <p>{{book.description}}</p>
     </div>
     <mat-dialog-actions class="book_details_buttons" align="end">
         <button mat-button mat-dialog-close>Cancel</button>

@@ -7,21 +7,37 @@
         >
             <mat-icon>add_circle_outline</mat-icon>
         </button>
-        <form *ngIf="!addBookFormHidden" class="addBook_form">
+        <form [formGroup]="addBookForm" *ngIf="!addBookFormHidden" class="addBook_form">
             <mat-form-field class="addBook_input">
                 <mat-label>Name of Book</mat-label>
-                <input matInput value="" #title>
+                <input 
+                  matInput 
+                  formControlName="title"
+                  value="" 
+                  #title 
+                  required/>
             </mat-form-field>
-            <mat-form-field class="addBook_input">
+            <mat-form-field class="addBook_input" >
                 <mat-label>Author</mat-label>
-                <input matInput value="" #author>
+                <input 
+                  matInput 
+                  formControlName="author"
+                  value="" 
+                  #author 
+                  required/>
             </mat-form-field>
             <mat-form-field class="addBook_input">
                 <mat-label>Description</mat-label>
-                <textarea  matInput value="" #description></textarea>
+                <textarea  
+                  matInput 
+                  formControlName="description"
+                  value="" 
+                  #description 
+                  required></textarea>
             </mat-form-field>
 
             <button 
+                [disabled]="!addBookForm.valid"
                 mat-raised-button
                 (click)="saveNewBook(title.value, author.value, description.value)"
                 color="primary">Save</button>
@@ -29,29 +45,20 @@
     </div>
 
 
-    <mat-card class="book_card">
+    <mat-card *ngFor="let book of books" class="book_card">
         <mat-card-header>
-          <mat-card-title>Harry Potter</mat-card-title>
-          <mat-card-subtitle>Joanne Rowling</mat-card-subtitle>
+          <mat-card-title>{{book.name}}</mat-card-title>
+          <mat-card-subtitle>{{book.authorName}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias rem</p>
+          <p>{{book.description}}</p>
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-button >MORE</button>
-          </mat-card-actions>
-    </mat-card> 
-
-    <mat-card class="book_card">
-        <mat-card-header>
-          <mat-card-title>Harry Potter</mat-card-title>
-          <mat-card-subtitle>Joanne Rowling</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias rem</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-            <button mat-button (click)="openBookDetails()">MORE</button>
+            <button mat-button 
+              (click)="openBookDetails(book)"
+            >
+            MORE
+          </button>
           </mat-card-actions>
     </mat-card> 
 </div>

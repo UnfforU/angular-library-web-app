@@ -28,6 +28,14 @@ export class BookService {
         catchError(this.handleError<Book>('addBook'))
       )
   } 
+
+  public getBooksByLibraryId(libraryId: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.reposUrl}/book/${libraryId}`)
+    .pipe(
+      tap(_ => console.log(`fetched books id=${libraryId}`)),
+      catchError(this.handleError<Book[]>('getBooksById', []))
+    );
+  }
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

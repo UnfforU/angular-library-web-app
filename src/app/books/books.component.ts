@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { BookDetailsComponent } from '../book-details/book-details.component';
-import { MatDialog } from '@angular/material/dialog';
+
 import { BookService } from '../services/book.service';
 import { Book } from '../models/models';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -11,19 +13,32 @@ import { Book } from '../models/models';
   styleUrls: ['./books.component.css']
 })
 export class BooksComponent {
+  @Input() books : Book[] = [];
 
   public addBookFormHidden: boolean = true;
 
-  public books: Book[] = [];
+  public addBookForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    author: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required)
+  }) 
 
   public constructor(
     public dialog: MatDialog,
     private bookService: BookService,
-  ){}
+  ){
+  }
 
-  protected openBookDetails(): void {
-    console.log("open dialog");
-    const dialogRef = this.dialog.open(BookDetailsComponent);
+  protected openBookDetails(chosenBook: Book): void {
+    console.log(this.books);
+    console.log(chosenBook);
+    const dialogRef = this.dialog.open(BookDetailsComponent, 
+    // {
+    //   data: {book: chosenBook},
+    // });
+    {
+      data: chosenBook
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -31,6 +46,7 @@ export class BooksComponent {
   }
 
   protected addBook(): void {
+    console.log(this.books);
     this.addBookFormHidden = !this.addBookFormHidden;
   }
 
