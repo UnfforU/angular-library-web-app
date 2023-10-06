@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
 import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -24,6 +25,9 @@ export class LibraryComponent implements OnInit {
 
   protected user: User;
 
+  public addLibraryForm = new FormGroup({
+    name: new FormControl('')
+  });
 
   public constructor(
     private libraryService: LibraryService,
@@ -68,9 +72,9 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  protected addLibrary(): void {
-    if(this.newLibrary)
-      this.libraryService.addLibrary(this.newLibrary)
+  protected addLibrary(name: string): void {
+    if(name)
+      this.libraryService.addLibrary({name} as Library)
         .subscribe(library => {
           console.log({library});
           this.libraries.push(library),

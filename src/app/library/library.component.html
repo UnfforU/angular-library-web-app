@@ -50,18 +50,25 @@
         </div>
     
         <div *ngIf="newLibrary && user.isAdmin">
-            <mat-form-field>
-                <mat-label>Enter library name</mat-label>
-                <input matInput type="text" [(ngModel)]="newLibrary.name">
-                <button 
-                    mat-icon-button
-                    (click)="addLibrary()"
-                    matSuffix 
-                    aria-label="Add" 
-                >
-                  <mat-icon>check</mat-icon>
-                </button>
-            </mat-form-field>
+            <form [formGroup]="addLibraryForm">
+                <mat-form-field>
+                    <mat-label>Enter library name</mat-label>
+                    <input 
+                        matInput 
+                        type="text" 
+                        #libraryName
+                        formControlName="name"
+                    >
+                    <button 
+                        mat-icon-button
+                        (click)="addLibrary(libraryName.value)"
+                        matSuffix 
+                        aria-label="Add" 
+                    >
+                      <mat-icon>check</mat-icon>
+                    </button>
+                </mat-form-field>
+            </form>
         </div>
         
 
@@ -88,9 +95,9 @@
     </div>
     
     <app-books
-        [books]="chosenBooks"
-        [currLibrary]="currLibrary"
-        (notifyBookCollectionChanged)="onNotifyBookCollectionChanged()"
+    [books]="chosenBooks"
+    [currLibrary]="currLibrary"
+    
     >
     </app-books>
 </section>
