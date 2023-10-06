@@ -3,42 +3,48 @@
         <mat-card>
             <mat-card-content>
                 <div class="logIn_card_components">
-                    <form class="logIn_input">
-                        <mat-form-field hideRequiredMarker appearance="outline" class="logIn_input">
+                    <form 
+                        [formGroup]="authForm"
+                        class="logIn_input" 
+                    >
+                        <mat-form-field 
+                            hideRequiredMarker 
+                            appearance="outline" 
+                            class="logIn_input"
+                        >
                             <mat-label>Name</mat-label>
-                            <input matInput required #username>
-                            <mat-hint align="end">Some txt</mat-hint>
+                            <input 
+                                #userName    
+                                formControlName="userName"    
+                                matInput 
+                                required
+                            >            
                         </mat-form-field>
-                        
-                        <mat-form-field hideRequiredMarker appearance="outline" class="logIn_input">
+                        <mat-form-field 
+                            hideRequiredMarker 
+                            appearance="outline" 
+                            class="logIn_input"
+                        >
                             <mat-label>Password</mat-label>
                             <input 
                                 #password
-                                required
+                                formControlName="password"
                                 matInput 
-                                [type]="hidePassword ? 'password' : 'text'"
-                            />
-                            <button 
-                                (click)="hidePassword = !hidePassword"
-                                mat-icon-button 
-                                matSuffix 
-                                [attr.aria-label]="'Hide password'" 
-                                [attr.aria-pressed]="hidePassword"
+                                type="password"
+                                required
                             >
-                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                              </button>
                             <mat-hint align="end">Enter your password</mat-hint>
-                        </mat-form-field>    
+                        </mat-form-field>   
                     </form>
-
                     <button 
                         mat-raised-button 
+                        (click)="logIn(userName.value, password.value)"
                         class="logIn_button" 
                         color="primary"
-                        (click)="logIn(username.value, password.value)" 
                     >
                         Log in
                     </button>
+                    
                 </div>
             </mat-card-content>
         </mat-card>
