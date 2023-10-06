@@ -14,7 +14,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./book-details.component.css']
 })
 export class BookDetailsComponent {
-  public book?: Book;
+  public book: Book;
   public bookedPeriodEnds: Date = new Date();
   public oldVersionBook?: Book;
   
@@ -54,7 +54,7 @@ export class BookDetailsComponent {
   }
 
   protected revertChanges(): void{
-    this.book = this.oldVersionBook;
+    // this.book = this.oldVersionBook;
     this.updateBookFormHidden = true;
   }
 

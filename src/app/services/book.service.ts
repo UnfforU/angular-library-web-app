@@ -10,6 +10,8 @@ import { Book } from '../models/models';
 })
 export class BookService {
 
+
+  
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type' : 'application/json'
@@ -22,7 +24,7 @@ export class BookService {
   ) { }
 
   public addBook(item: Book): Observable<Book> {
-    return this.http.post<Book>(`${this.reposUrl}/book`, item, this.httpOptions)
+    return this.http.post<Book>(`${this.reposUrl}/Books`, item, this.httpOptions)
       .pipe(
         tap((book: Book) => console.log(`added book w/ id=${book.libraryId}`)),
         catchError(this.handleError<Book>('addBook'))
@@ -30,7 +32,7 @@ export class BookService {
   } 
 
   public getBooksByLibraryId(libraryId: string): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.reposUrl}/book/${libraryId}`)
+    return this.http.get<Book[]>(`${this.reposUrl}/Books/${libraryId}`)
     .pipe(
       tap(_ => console.log(`fetched books id=${libraryId}`)),
       catchError(this.handleError<Book[]>('getBooksById', []))
@@ -38,7 +40,7 @@ export class BookService {
   }
 
   public deleteBook(bookId: string): Observable<Book[]> {
-    return this.http.delete<Book[]>(`${this.reposUrl}/Book/${bookId}`, this.httpOptions)
+    return this.http.delete<Book[]>(`${this.reposUrl}/Books/${bookId}`, this.httpOptions)
       .pipe(
         tap(_ => console.log(`deleted book guid={${bookId}}`)),
         catchError(this.handleError<Book[]>('deleteBook'))
@@ -46,7 +48,7 @@ export class BookService {
   }
   
   public updateBook(book: Book): Observable<Book> {
-    return this.http.put<Book>(`${this.reposUrl}/Book/${book.bookId}`, book, this.httpOptions)
+    return this.http.put<Book>(`${this.reposUrl}/Books/${book.bookId}`, book, this.httpOptions)
       .pipe(
         tap(_ => console.log(`updated book id=${book.bookId}`)),
         catchError(this.handleError<Book>('updateBook'))
