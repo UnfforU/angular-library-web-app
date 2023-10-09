@@ -48,11 +48,13 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     
-  //   JwtModule.forRoot({
-  //     config: {
-  //       tokenGetter
-  //   },
-  // }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:5065'],
+        disallowedRoutes: [],
+      },
+    }),
   ],
   providers: [{
     provide: REPOS_API_URL,

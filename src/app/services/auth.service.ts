@@ -20,7 +20,7 @@ export class AuthService {
   public constructor(
     private http: HttpClient,
     @Inject(REPOS_API_URL) private apiUrl: string,
-    // public jwtHelper: JwtHelperService,
+    public jwtHelper: JwtHelperService,
     private router: Router
   ) { 
 
@@ -35,10 +35,11 @@ export class AuthService {
       )
   }
 
-  // public isAuthenticated(): boolean {
-  //   let token = localStorage.getItem(ACCESS_TOKEN_KEY);
-  //   return token != null && !this.jwtHelper.isTokenExpired(token)
-  // }
+  public isAuthenticated(): boolean {
+    let token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    console.log("check 'isAuthenificated'");
+    return token != null && !this.jwtHelper.isTokenExpired(token)
+  }
 
   public logOut():void {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
