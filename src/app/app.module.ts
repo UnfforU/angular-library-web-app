@@ -52,7 +52,6 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         allowedDomains: ['localhost:5065'],
-        disallowedRoutes: [],
       },
     }),
   ],

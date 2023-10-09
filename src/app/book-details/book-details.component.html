@@ -15,7 +15,7 @@
             </button>
         </div>
         
-        <h4 class="author">{{book.authorName}}</h4>
+        <h4 class="author">empty</h4>
 
         <div mat-dialog-content>
             <p>{{book.description}}</p>
@@ -59,7 +59,7 @@
             <input 
                 matInput 
                 formControlName="author"
-                [(ngModel)]="book.authorName" 
+               
                 required
             />
         </mat-form-field>

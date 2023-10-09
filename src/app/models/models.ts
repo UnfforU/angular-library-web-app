@@ -1,19 +1,25 @@
 export interface Library {
-    libraryId: string;
-    name: string;
-    isDeleted: boolean;
-    // books[]: Book[];
+    libraryId: string,
+    name: string,
+    books: Book[]
 }
 
 export interface Book {
-    bookId: string;
-    name: string;
-    authorName: string;
-    description: string;
-    libraryId: string;
-    ownerId: string;
-    isBooked: boolean;
-    bookedDate: Date;
+    bookId: string,
+    name: string,
+    authors: Author[],
+    description: string,
+    cover: string,
+    libraryId: string,
+    isBooked: boolean,
+    ownerId: string,
+    bookedDate: Date
+}
+
+export interface Author {
+    authorId: string,
+    name: string
+
 }
 
 export interface Login {

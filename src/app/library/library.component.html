@@ -1,12 +1,4 @@
 <header class="header_main">
-    <!-- <mat-grid-list cols="2" rowHeight="50px" class="title-list-elems">
-        <mat-grid-tile class="title_text">WebLibrary</mat-grid-tile>
-        <mat-grid-tile rowspan="2">
-            <button mat-raised-button>Log Out</button>
-        </mat-grid-tile>
-        <mat-grid-tile >UserName</mat-grid-tile>
-    </mat-grid-list> -->
-
     <div class="main_header_block">
         <p class="title">Web Library</p>
         <p class="username">{{user.userName}}</p>   
@@ -18,24 +10,6 @@
 </header>
 <mat-divider></mat-divider>
 
-<!-- <mat-sidenav-container class="books_and_libraries">
-    <mat-sidenav 
-        opened 
-        disableClose 
-        mode="side"
-        class="libraries_list"
-    >
-        
-
-    </mat-sidenav>
-
-    <mat-sidenav-content
-        class="books_list"
-    >
-        
-    </mat-sidenav-content>
-</mat-sidenav-container> -->
-
 <section class="books_and_libraries">
     <div class="libraries_list">
         <div class="libraries_list_title_button">
@@ -43,21 +17,23 @@
             <button 
                 *ngIf="user.isAdmin"
                 mat-icon-button
-                (click)="createNewLibrary()"
+                (click)="changeAddLibraryMode()"
             >
                 <mat-icon>add_circle_outline</mat-icon>
             </button>
         </div>
     
-        <div *ngIf="newLibrary && user.isAdmin">
+        <div *ngIf="addNewLibraryMode && user.isAdmin">
             <form [formGroup]="addLibraryForm">
                 <mat-form-field>
                     <mat-label>Enter library name</mat-label>
                     <input 
-                        matInput 
-                        type="text" 
                         #libraryName
                         formControlName="name"
+                        matInput 
+                        hideRequiredMarker
+                        placeholder="new name"
+                        type="text" 
                     >
                     <button 
                         mat-icon-button
@@ -67,12 +43,13 @@
                     >
                       <mat-icon>check</mat-icon>
                     </button>
+                    <mat-error *ngIf="!addLibraryForm.valid">Input can't be empty</mat-error>
                 </mat-form-field>
             </form>
         </div>
         
 
-        <mat-action-list *ngFor="let library of libraries" role="libraries" >
+        <mat-action-list *ngFor="let library of librariesList" role="libraries" >
             <mat-list-item (click)="chooseLibrary(library)">
                 
                     {{library.name}}

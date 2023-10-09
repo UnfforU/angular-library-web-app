@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
-import { Book, Library, User } from '../models/models';
+import { Author, Book, Library, User } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 
@@ -59,7 +59,7 @@ export class BooksComponent {
   protected saveNewBook(title: string, author: string, description: string): void {
     let newBook = {
       name: title,
-      authorName: author,
+      authors: [{name: "Mark"} as Author],
       description: description,
       libraryId: this.currLibrary?.libraryId, //
       ownerId: "59729847-C8BA-42FD-8938-353B5DDC005A" //

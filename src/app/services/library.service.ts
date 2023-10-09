@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Library } from '../models/models';
 import { REPOS_API_URL } from '../app-injection-tokens';
+import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,38 +19,31 @@ export class LibraryService {
   
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,
-    private http: HttpClient
+    private http: HttpClient,
+    private errHandler: ErrorHandlerService
   ) { }
   
   public getLibraries(): Observable<Library[]> {
     return this.http.get<Library[]>(`${this.reposUrl}/Libraries`)
       .pipe(
-        tap(_ => console.log('fetched libraries')),
-        catchError(this.handleError<Library[]>('getLibrary', []))
+        tap((libraries: Library[]) => console.log('fetched libraries', libraries)),
+        catchError(this.errHandler.handleError<Library[]>('getLibrary', []))
       )
   }
+
   public addLibrary(item: Library): Observable<Library> {
     return this.http.post<Library>(`${this.reposUrl}/Libraries`, item, this.httpOptions)
       .pipe(
-        tap((library: Library) => console.log(`added library w/ id=${library.libraryId}`)),
-        catchError(this.handleError<Library>('addLibrary'))
+        tap((library: Library) => console.log('added library w/', library)),
+        catchError(this.errHandler.handleError<Library>('addLibrary'))
       )
   } 
 
-  public deleteLibrary(guid: string): Observable<Library[]> {
-    return this.http.delete<Library[]>(`${this.reposUrl}/Libraries/${guid}`, this.httpOptions)
+  public deleteLibrary(libraryId: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.reposUrl}/Libraries/${libraryId}`, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`deleted library guid={${guid}}`)),
-        catchError(this.handleError<Library[]>('deleteLibrary'))
+        tap(_ => console.log(`deleted library guid={${libraryId}}`)),
+        catchError(this.errHandler.handleError<boolean>('deleteLibrary'))
       )
-  }
-
-  
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      return of(result as T);
-    }
   }
 }
