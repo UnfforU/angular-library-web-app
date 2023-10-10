@@ -22,10 +22,6 @@ export class AuthorizationComponent {
     private snackBar: MatSnackBar
   ){}
 
-  // protected get isLoggedIn() : boolean {
-  //   return this.authService.isAuthenticated()
-  // }
-
   protected logIn(username: string, password: string): void {
     console.log({username, password});
     this.authService.logIn({username, password} as Login)

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,20 +16,11 @@ import { environment } from 'src/environments/environment.development';
 import { ACCESS_TOKEN_KEY } from './services/auth.service';
 import { BooksComponent } from './books/books.component';
 import { AddChangeBookComponent } from './add-change-book/add-change-book.component';
+import { AuthorComponent } from './author/author.component';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
-
-
-// const conf: JwtModuleOptions = {
-//   tokenGetter,
-//   allowedDomains: environment.tokenWhiteListedDomains
-// }
-
-// const Jwt: JwtModuleOptions = {
-  
-// }
 
 @NgModule({
   declarations: [
@@ -38,7 +29,8 @@ export function tokenGetter() {
     LibraryComponent,
     BookDetailsComponent,
     BooksComponent,
-    AddChangeBookComponent
+    AddChangeBookComponent,
+    AuthorComponent
   ],
   
   imports: [

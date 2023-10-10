@@ -12,8 +12,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 
 
@@ -31,6 +33,8 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatAutocompleteModule,
+  MatToolbarModule,
+  
 ]
 
 @NgModule({

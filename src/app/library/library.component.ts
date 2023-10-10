@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MatDialog } from '@angular/material/dialog';
-import { BookDetailsComponent } from '../book-details/book-details.component';
 import { Library, Book, User } from '../models/models';
 import { LibraryService } from '../services/library.service';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
-import { JwtService } from '../services/jwt.service';
 import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -22,7 +19,6 @@ export class LibraryComponent implements OnInit {
   protected librariesList: Library[] = [];
   public addNewLibraryMode: boolean = false;
   public chosenBooks: Book[] = [];
-  public currLibrary: Library;
 
   protected user: User;
 
@@ -40,7 +36,6 @@ export class LibraryComponent implements OnInit {
 
    
     this.user = this.userService.currUser;
-    this.currLibrary = this.libraryService.selectedLibrary;
 
     console.log(`const library ${this.user}`);
   }
@@ -76,21 +71,21 @@ export class LibraryComponent implements OnInit {
             console.log({library});
             this.librariesList.push(library)
             this.changeAddLibraryMode();
-            this.openSnackBar("New library add successfully!", "Ok", {duration: 3000});
+            this.openSnackBar(`Library: "${library.name}" successfully added!`, "Ok", {duration: 3000});
           },
           error: () => 
             this.openSnackBar("Can't add new library. Try Again", "Ok", {duration: 3000})});
   }
 
-  // protected doubleOkDeleteLibrary(library: Library): void {
-  //   this.openSnackBar("Are you realy want to delete library?", )
-  // }
-
   protected deleteLibrary(delLibrary: Library): void {
-    this.libraryService.deleteLibrary(delLibrary.libraryId)
-      .subscribe(
-        () => this.librariesList = this.librariesList.filter(library => library.libraryId != delLibrary.libraryId)
-      );
+    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${delLibrary.name}" with all included books?`, "Delete", {duration: 3000});
+    deleteSnackBarRef.onAction()
+      .subscribe(()=>{
+        this.libraryService.deleteLibrary(delLibrary.libraryId)
+        .subscribe(
+          () => this.librariesList = this.librariesList.filter(library => library.libraryId != delLibrary.libraryId)
+        );
+      });
   }
 
   public chooseLibrary(library: Library): void {
@@ -105,13 +100,23 @@ export class LibraryComponent implements OnInit {
     }); 
   }
 
+  private updateSelectedLibrary(): void {
+    this.bookService.getBooksByLibraryId(this.libraryService.selectedLibrary.libraryId)
+    .subscribe(books => {
+      console.log(`getBooks: ${books as Book[]}`);
+      this.libraryService.selectedLibrary.books = books;
+      this.chosenBooks = books
+      console.log(books);
+    }); 
+  }
+
   protected openSnackBar(message: string, action: string, config: MatSnackBarConfig) {
     this.snackBar.open(message, action, config);
   }
 
 
-  // public onNotifyBookCollectionChanged(): void {
-  //   this.getLibraries();
-  // }
-  
+  public onNotifyBookCollectionChanged(): void {
+    console.log("notifyBookCollectionChanged");
+    this.updateSelectedLibrary();
+  }
 }

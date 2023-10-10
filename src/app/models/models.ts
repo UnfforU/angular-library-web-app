@@ -11,9 +11,15 @@ export interface Book {
     description: string,
     cover: string,
     libraryId: string,
-    isBooked: boolean,
-    ownerId: string,
-    bookedDate: Date
+    orders: Order[]
+}
+
+export interface Order {
+    orderId: string,
+    userId: string,
+    bookId: string,
+    startDateTime: Date,
+    endDateTime: Date
 }
 
 export interface Author {

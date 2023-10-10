@@ -4,12 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
-import { Author, Book, Library, User } from '../models/models';
+import { Book, Library, User } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { AddChangeBookComponent } from '../add-change-book/add-change-book.component';
 import { AuthorService } from '../services/author.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-books',
@@ -36,7 +37,8 @@ export class BooksComponent {
     private bookService: BookService,
     private userService: UserService,
     protected authorService: AuthorService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ){
     this.user = this.userService.currUser
   }
@@ -52,6 +54,9 @@ export class BooksComponent {
     const dialogRef = this.dialog.open(BookDetailsComponent);
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        
+      }
       console.log(`Dialog result: ${result}`);
     });
   }
@@ -63,37 +68,24 @@ export class BooksComponent {
       if(result){
         console.log(`Dialog result: ${result}`);
         console.log(this.bookService.selectedBook);
+        // this.books.push(this.bookService.selectedBook);
         this.notifyBookCollectionChanged.emit();
+        this.snackBar.open(`Library: "${this.bookService.selectedBook.name}" successfully added!`, "Ok", {duration: 3000});
       }
-      
     });
   }
 
-  protected saveNewBook(title: string, author: string, description: string): void {
-    let newBook = {
-      name: title,
-      authors: [{authorId: "3A13976A-F4DC-4FAD-00A4-08DBC5979989", name: "Mark Manson"} as Author],
-      description: description,
-      libraryId: this.currLibrary?.libraryId
-    } as Book
-
-    console.log(newBook);
-    this.bookService.addBook(newBook)
-      .subscribe(book => {
-        console.log({book});
-        this.books.push(book);
-        this.addBookFormHidden = !this.addBookFormHidden;
-        
-    })
-  }
-
-  protected deleteBook(bookId: string): void {
-    console.log(bookId);
-    this.bookService.deleteBook(bookId)
-      .subscribe(books => {
-        console.log(books);
-        this.books = books;
-        this.notifyBookCollectionChanged.emit(); 
-      })
+  protected deleteBook(book: Book): void {
+    console.log(book);
+    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${book.name}"?`, "Delete", {duration: 3000});
+    deleteSnackBarRef.onAction()
+      .subscribe(()=>
+        this.bookService.deleteBook(book.bookId)
+        .subscribe(books => {
+          console.log(books);
+          this.books = books;
+          this.notifyBookCollectionChanged.emit(); 
+        })
+      )
   }
 }

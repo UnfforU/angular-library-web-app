@@ -20,48 +20,32 @@
         <div mat-dialog-content>
             <p>{{book.description}}</p>
             <mat-divider></mat-divider>
-            <p *ngIf="book.isBooked">Book was booked in: {{book.bookedDate | date }}</p>
-        </div>
+            <p *ngFor="let order of sortedOrderList">
+                Book was booked: {{order.startDateTime | date}} - {{order.endDateTime | date}}
+                    by {{this.userService.getUserNameById(order.userId)}}
+            </p>
+        </div>  
 
         <mat-dialog-actions align="end">
-            <button  mat-button mat-dialog-close>Back</button>
+            <button  mat-button mat-dialog-close cdkFocusInitial>Back</button>
             <mat-form-field>
                 <mat-label>Enter a date range</mat-label>
-                <mat-date-range-input [formGroup]="bookedDateRange" [rangePicker]="picker">
-                    <input matStartDate formControlName="start" placeholder="Start date">
+                <mat-date-range-input [min]="nowDate" [dateFilter]="myFilter" [formGroup]="bookedDateRange" [rangePicker]="picker" >
+                    <input   matStartDate formControlName="start" placeholder="Start date">
                     <input matEndDate formControlName="end" placeholder="End date">
                 </mat-date-range-input>
-                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
               
                 <mat-error *ngIf="bookedDateRange.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
                 <mat-error *ngIf="bookedDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
             </mat-form-field>
-            <!-- <form [formGroup]="bookedDate">
-                <mat-form-field color="primary">
-                    <mat-label>Start Book Date</mat-label>
-                    <input formControlName="startBookedDate" matInput [matDatepicker]="startDatePicker">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #startDatePicker color="primary" disabled="false"></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field color="primary">
-                    <mat-label>End Book Date</mat-label>
-                    <input formControlName="endBookedDate" matInput [matDatepicker]="endDatePicker">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endDatePicker color="primary" disabled="false"></mat-datepicker>
-                </mat-form-field>
-            </form> -->
-            
             <button
                 mat-raised-button 
                 color="primary" 
-                [disabled]="book.isBooked"
-                
-                cdkFocusInitial
-                (click)="serveBook(book)"
+            
+                (click)="serveBook()"
             >
                 Book
             </button>

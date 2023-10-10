@@ -9,11 +9,6 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class AuthorService {
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type' : 'application/json'
-    })
-  };
 
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,

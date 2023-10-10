@@ -11,12 +11,11 @@
         
     </div>
 
-
     <mat-card *ngFor="let book of books" class="book_card">
         <mat-card-header>
             <mat-card-title >
                     {{book.name}}
-                    <mat-icon *ngIf="book.isBooked">bookmark</mat-icon>
+                    <mat-icon *ngIf="book.orders.length != 0">bookmark</mat-icon>
             </mat-card-title>
             <mat-card-subtitle>{{this.authorService.getConcatAuthors(book.authors)}}</mat-card-subtitle>
         </mat-card-header>
@@ -27,7 +26,7 @@
             <button 
                 *ngIf="user.isAdmin"
                 mat-icon-button 
-                (click)="deleteBook(book.bookId)"
+                (click)="deleteBook(book)"
             >
                 <mat-icon>delete</mat-icon>
             </button>

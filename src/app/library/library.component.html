@@ -1,14 +1,25 @@
-<header class="header_main">
-    <div class="main_header_block">
+<header>
+    <!-- <div class="main_header_block">
         <p class="title">Web Library</p>
         <p class="username">{{user.userName}}</p>   
     </div>
      
     <div class="logOut_button"> 
         <button mat-raised-button (click)="logOut()">Log out</button>
-    </div>
+    </div> -->
+    <mat-toolbar color="primary" [class.mat-elevation-z10]="true" [class.mat-elevation-z1]="true">
+        <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+          <mat-icon>menu</mat-icon>
+        </button> -->
+        <span>Web Library</span>
+        <span class="header-spacer"></span>
+        <span class="username">{{user.userName}}</span>
+        <button mat-raised-button (click)="logOut()">Log out</button>
+      </mat-toolbar>
 </header>
-<mat-divider></mat-divider>
+<mat-divider inset="true"></mat-divider>
+
+
 
 <section class="books_and_libraries">
     <div class="libraries_list">
@@ -51,13 +62,8 @@
 
         <mat-action-list *ngFor="let library of librariesList" role="libraries" >
             <mat-list-item (click)="chooseLibrary(library)">
-                
                     {{library.name}}
-                
                 <div matListItemMeta>
-                    <!-- <button mat-icon-button>
-                        <mat-icon>change</mat-icon>
-                    </button> -->
                     <button 
                         *ngIf="user.isAdmin"
                         mat-icon-button
@@ -70,10 +76,11 @@
             <mat-divider></mat-divider>
         </mat-action-list>
     </div>
-    
+    <mat-divider vertical="true"></mat-divider>
     <app-books
     [books]="this.libraryService.selectedLibrary.books"
     [currLibrary]="this.libraryService.selectedLibrary"
+    (notifyBookCollectionChanged)="onNotifyBookCollectionChanged()"
     >
     </app-books>
 </section>

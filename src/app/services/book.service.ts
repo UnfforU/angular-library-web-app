@@ -4,13 +4,13 @@ import { Observable, catchError, of, tap } from 'rxjs';
 
 import { REPOS_API_URL } from '../app-injection-tokens';
 import { Book } from '../models/models';
+import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
   private _selectedBook: Book = {} as Book;
-
   public get selectedBook() {
     return this._selectedBook
   }
@@ -28,14 +28,15 @@ export class BookService {
 
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,
-    private http: HttpClient
+    private http: HttpClient,
+    private errHandler: ErrorHandlerService
   ) { }
 
   public addBook(item: Book): Observable<Book> {
     return this.http.post<Book>(`${this.reposUrl}/Books`, item, this.httpOptions)
       .pipe(
         tap((book: Book) => console.log(`added book w/ id=${book.libraryId}`)),
-        catchError(this.handleError<Book>('addBook'))
+        catchError(this.errHandler.handleError<Book>('addBook'))
       )
   } 
 
@@ -43,7 +44,7 @@ export class BookService {
     return this.http.get<Book[]>(`${this.reposUrl}/Books/${libraryId}`)
     .pipe(
       tap(_ => console.log(`fetched books id=${libraryId}`)),
-      catchError(this.handleError<Book[]>('getBooksById', []))
+      catchError(this.errHandler.handleError<Book[]>('getBooksById', []))
     );
   }
 
@@ -51,7 +52,7 @@ export class BookService {
     return this.http.delete<Book[]>(`${this.reposUrl}/Books/${bookId}`, this.httpOptions)
       .pipe(
         tap(_ => console.log(`deleted book guid={${bookId}}`)),
-        catchError(this.handleError<Book[]>('deleteBook'))
+        catchError(this.errHandler.handleError<Book[]>('deleteBook'))
       )
   }
   
@@ -59,15 +60,8 @@ export class BookService {
     return this.http.put<Book>(`${this.reposUrl}/Books/${book.bookId}`, book, this.httpOptions)
       .pipe(
         tap(_ => console.log(`updated book id=${book.bookId}`)),
-        catchError(this.handleError<Book>('updateBook'))
+        catchError(this.errHandler.handleError<Book>('updateBook'))
       );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      return of(result as T);
-    }
   }
 
 }

@@ -3,6 +3,10 @@
     min-height: 100px;
 }
 
+.header-spacer {
+    flex: 1 1 auto;
+  }
+
 .title {
     padding: 20px 0px 0px 2%;
     display: inline-block;
@@ -18,10 +22,10 @@
 }
 
 .username {
-    padding: 20px 2% 0px 0px;
-    display: inline-block;
-    text-align: right;
-    width: 48%;
+    font-size: 15px;
+    padding-right: 10px;
+    
+    
 }
 
 .logOut_button {
@@ -34,14 +38,7 @@
     display: flex;
 }
 
-.libraries_list {
-    width: 400px;
-    padding: 50px 20px 0px 30px;
 
-    border: 0.2rem outset;
-    border-color: rgb(103,58,183);
-    border-radius: 5px;
-}
 
 .libraries_list_title_button {
     display: block;

@@ -1,16 +1,16 @@
-.books_list_title_button {
+/* .books_list_title_button {
     display: block;
     margin-bottom: 10px;
 }
 
-.books_list_title {
+/* .books_list_title {
     display: inline;
     vertical-align:text-bottom;
     margin-right: 10px;
-}
+} */
 
 .books_list {
-    padding: 50px 20px 0px 30px;
+    padding: 10px 20px 0px 30px;
     display: block;
 }
 
@@ -26,4 +26,4 @@
 
 .addBook_input {
     width: 100%;
-}
+} 
