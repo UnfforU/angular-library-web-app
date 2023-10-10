@@ -15,7 +15,7 @@ import { UserService } from '../services/user.service';
 })
 export class BooksComponent {
   @Input() books : Book[] = [];
-  @Input() currLibrary?: Library;
+  @Input() currLibrary: Library = {} as Library;
   @Output() notifyBookCollectionChanged = new EventEmitter();
 
   public addBookFormHidden: boolean = true;
@@ -36,16 +36,15 @@ export class BooksComponent {
     this.user = this.userService.currUser
   }
 
+  public ngOnInit(){
+    console.log("books on init");
+  }
+
   protected openBookDetails(chosenBook: Book): void {
     console.log(this.books);
     console.log(chosenBook);
-    const dialogRef = this.dialog.open(BookDetailsComponent, 
-    // {
-    //   data: {book: chosenBook},
-    // });
-    {
-      data: chosenBook
-    });
+    this.bookService.selectedBook = chosenBook;
+    const dialogRef = this.dialog.open(BookDetailsComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -59,12 +58,12 @@ export class BooksComponent {
   protected saveNewBook(title: string, author: string, description: string): void {
     let newBook = {
       name: title,
-      authors: [{name: "Mark"} as Author],
+      authors: [{authorId: "3A13976A-F4DC-4FAD-00A4-08DBC5979989", name: "Mark Manson"} as Author],
       description: description,
-      libraryId: this.currLibrary?.libraryId, //
-      ownerId: "59729847-C8BA-42FD-8938-353B5DDC005A" //
+      libraryId: this.currLibrary?.libraryId
     } as Book
 
+    console.log(newBook);
     this.bookService.addBook(newBook)
       .subscribe(book => {
         console.log({book});

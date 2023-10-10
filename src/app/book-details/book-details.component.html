@@ -58,11 +58,11 @@
                 [(ngModel)]="book.name"
                 required/>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="updateBook_input">
             <mat-label>Author</mat-label>
             <input type="text" matInput formControlName="author" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let author of auhtorsList | async" [value]="author">
+              <mat-option *ngFor="let author of filteredAuthorsList" [value]="author">
                 {{author.name}}
               </mat-option>
             </mat-autocomplete>
@@ -89,7 +89,7 @@
         </mat-form-field>
 
         <button 
-            [disabled]="!updateBookForm.valid"
+           
             (click)="revertChanges()"
             mat-raised-button
             class="updateBook_button"
