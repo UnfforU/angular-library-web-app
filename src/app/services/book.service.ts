@@ -9,8 +9,16 @@ import { Book } from '../models/models';
   providedIn: 'root'
 })
 export class BookService {
+  private _selectedBook: Book = {} as Book;
 
-
+  public get selectedBook() {
+    return this._selectedBook
+  }
+  public set selectedBook(value: Book) {
+    if(value != this._selectedBook)
+      this._selectedBook = value
+    
+  }
   
   private httpOptions = {
     headers: new HttpHeaders({

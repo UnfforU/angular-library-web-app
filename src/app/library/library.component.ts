@@ -31,7 +31,7 @@ export class LibraryComponent implements OnInit {
   });
 
   public constructor(
-    private libraryService: LibraryService,
+    public libraryService: LibraryService,
     private authService: AuthService,
     private bookService: BookService,
     private userService: UserService,
@@ -92,26 +92,20 @@ export class LibraryComponent implements OnInit {
       );
   }
 
-  public chooseLibrary(library: Library): void{
-    // this.currLibrary = library;
+  public chooseLibrary(library: Library): void {
+    this.libraryService.selectedLIbrary = library;
     console.log(library);
     this.bookService.getBooksByLibraryId(library.libraryId)
     .subscribe(books => {
       console.log(`getBooks: ${books}`);
+      this.libraryService.selectedLibrary.books = books;
       this.chosenBooks = books
     }); 
-
-      
-
-
   }
 
   protected openSnackBar(message: string, action: string, config: MatSnackBarConfig) {
     this.snackBar.open(message, action, config);
   }
-
-  
-
 
 
   // public onNotifyBookCollectionChanged(): void {

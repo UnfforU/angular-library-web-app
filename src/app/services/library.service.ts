@@ -11,6 +11,17 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class LibraryService {
+  private _selectedLibrary: Library = {} as Library;
+  
+  public get selectedLibrary() {
+    return this._selectedLibrary;
+  }
+  public set selectedLIbrary(value: Library) {
+    if(value != this._selectedLibrary)
+      this._selectedLibrary = value;
+  } 
+
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type' : 'application/json'
@@ -22,6 +33,8 @@ export class LibraryService {
     private http: HttpClient,
     private errHandler: ErrorHandlerService
   ) { }
+
+  
   
   public getLibraries(): Observable<Library[]> {
     return this.http.get<Library[]>(`${this.reposUrl}/Libraries`)

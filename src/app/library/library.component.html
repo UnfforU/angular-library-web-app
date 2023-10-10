@@ -72,9 +72,8 @@
     </div>
     
     <app-books
-    [books]="chosenBooks"
-    [currLibrary]="currLibrary"
-    
+    [books]="this.libraryService.selectedLibrary.books"
+    [currLibrary]="this.libraryService.selectedLibrary"
     >
     </app-books>
 </section>

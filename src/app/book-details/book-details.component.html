@@ -22,17 +22,21 @@
             <mat-divider></mat-divider>
             <p *ngIf="book.isBooked">Book was booked in: {{book.bookedDate | date }}</p>
         </div>
-        <div>
 
-        </div>
-
-        <mat-dialog-actions class="book_details_buttons" align="end">
-            <button mat-button mat-dialog-close>Back</button>
-            <button 
+        <mat-dialog-actions align="end">
+            <button  mat-button mat-dialog-close>Back</button>
+            <mat-form-field color="primary">
+                <mat-label>Book Date</mat-label>
+                <input [formControl]="bookedDate" matInput [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker color="primary" disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <button
                 mat-raised-button 
                 color="primary" 
                 [disabled]="book.isBooked"
-                [mat-dialog-close]="true" 
+                
                 cdkFocusInitial
                 (click)="serveBook(book)"
             >
@@ -54,7 +58,17 @@
                 [(ngModel)]="book.name"
                 required/>
         </mat-form-field>
-        <mat-form-field class="updateBook_input" >
+        <mat-form-field>
+            <mat-label>Author</mat-label>
+            <input type="text" matInput formControlName="author" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let author of auhtorsList | async" [value]="author">
+                {{author.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+        <!-- <mat-form-field class="updateBook_input" >
             <mat-label>Author</mat-label>
             <input 
                 matInput 
@@ -62,7 +76,7 @@
                
                 required
             />
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field class="updateBook_input">
             <mat-label>Description</mat-label>
             <textarea  

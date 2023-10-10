@@ -8,9 +8,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -25,6 +28,9 @@ const MaterialComponents = [
   MatGridListModule,
   MatIconModule,
   MatSnackBarModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatAutocompleteModule,
 ]
 
 @NgModule({
