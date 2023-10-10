@@ -28,4 +28,9 @@ export class AuthorService {
         catchError(this.errHandler.handleError<Author[]>('getAuthors', []))
       )
   }
+
+  public getConcatAuthors(authorsList: Author[]): string {
+    return Array.from(authorsList, (author) => author.name).join(", ");
+  }
+
 }

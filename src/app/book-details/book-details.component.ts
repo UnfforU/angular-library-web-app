@@ -8,6 +8,7 @@ import { BookService } from '../services/book.service';
 import { UserService } from '../services/user.service';
 import { AuthorService } from '../services/author.service';
 import { map, startWith } from 'rxjs';
+import { AddChangeBookComponent } from '../add-change-book/add-change-book.component';
 
 
 @Component({
@@ -15,69 +16,45 @@ import { map, startWith } from 'rxjs';
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
 })
-export class BookDetailsComponent implements OnInit {
+export class BookDetailsComponent {
   public book: Book;
-  public bookedPeriodEnds: Date = new Date();
- 
-  public authorsList: Author[] = []; 
-  public filteredAuthorsList: Author[] = [];
   public oldVersionBook?: Book;
-
- 
+  
+  public bookedPeriodEnds: Date = new Date();
   
   public isAdmin: boolean | undefined = this.userService.currUser?.isAdmin;
 
   protected updateBookFormHidden = true;
 
-  public updateBookForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    author: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required)
-  })
-
-  public bookedDate = new FormControl('', Validators.required);
+  private startBookedDate = new Date();
   
+  public bookedDateRange = new FormGroup({
+    start: new FormControl<Date>(new Date, Validators.required),
+    end: new FormControl<Date>(new Date, Validators.required),
+  });
   constructor(
+    public dialog: MatDialog,
     private bookService: BookService,
     private userService: UserService,
-    private authorService: AuthorService,
+    protected authorService: AuthorService,
   ){
     this.book = this.bookService.selectedBook;
-    this.bookedDate.setValue(`${this.book.bookedDate}`);
-    this.bookedDate.disable();
+    // this.bookedDate.controls.startBookedDate.setValue(`${this.startBookedDate}`);
+    // this.bookedDate.controls.endBookedDate.setValue(`${this.book.bookedDate}`);
+    // console.log(this.book.bookedDate);
+    // console.log(this.startBookedDate);
+    // this.bookedDateRange.disable();
   }
 
-  public ngOnInit() {
-    this.authorService.getAuthors()
-      .subscribe(
-        authors => {
-          this.authorsList = authors,
-          this.filteredAuthorsList = this.authorsList
-          console.log(this.authorsList);
-        }
-      );
-  
-    this.updateBookForm.get('author')?.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filter(value || '')),
-        )
-        .subscribe((authors) =>
-          this.filteredAuthorsList = authors
-        );
-  }
+  protected openAddUpdateForm(): void {
 
-  private _filter(value: string): Author[] {
-    return this.authorsList.filter(author => author.name.toLowerCase().includes(value.toLowerCase()))
-  }
-
-  protected displayFn(author: Author): string {
-    return author && author.name ? author.name : '';
-  }
-
-  protected useUpdateMode(): void {
-    this.updateBookFormHidden = false;
-    this.oldVersionBook = this.book;
+    const dialogRef = this.dialog.open(AddChangeBookComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(`Dialog result: ${result}`);
+      }
+      
+    });
   }
 
   protected saveUpdateChanges(): void {
@@ -98,7 +75,8 @@ export class BookDetailsComponent implements OnInit {
 
   protected serveBook(book: Book): void {
     book.isBooked = true;
-    book.bookedDate = new Date(this.bookedDate.value!);
+    // let endBookedDate = this.bookedDate.get('endBookedDate')?.value;
+    // book.bookedDate = new Date(endBookedDate ? endBookedDate : "");
     book.ownerId = this.userService.currUser.userId;
 
     console.log("serveBook");

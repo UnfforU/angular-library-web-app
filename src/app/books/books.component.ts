@@ -7,6 +7,9 @@ import { BookService } from '../services/book.service';
 import { Author, Book, Library, User } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
+import { AddChangeBookComponent } from '../add-change-book/add-change-book.component';
+import { AuthorService } from '../services/author.service';
 
 @Component({
   selector: 'app-books',
@@ -31,7 +34,9 @@ export class BooksComponent {
   public constructor(
     public dialog: MatDialog,
     private bookService: BookService,
-    private userService: UserService
+    private userService: UserService,
+    protected authorService: AuthorService,
+    private router: Router
   ){
     this.user = this.userService.currUser
   }
@@ -52,7 +57,16 @@ export class BooksComponent {
   }
 
   protected addBook(): void {
-    this.addBookFormHidden = !this.addBookFormHidden;
+    this.bookService.selectedBook = {} as Book;
+    const dialogRef = this.dialog.open(AddChangeBookComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(`Dialog result: ${result}`);
+        console.log(this.bookService.selectedBook);
+        this.notifyBookCollectionChanged.emit();
+      }
+      
+    });
   }
 
   protected saveNewBook(title: string, author: string, description: string): void {
@@ -69,6 +83,7 @@ export class BooksComponent {
         console.log({book});
         this.books.push(book);
         this.addBookFormHidden = !this.addBookFormHidden;
+        
     })
   }
 

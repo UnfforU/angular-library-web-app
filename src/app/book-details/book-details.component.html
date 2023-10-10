@@ -7,7 +7,7 @@
                 *ngIf="isAdmin"
                 mat-icon-button 
                 class="chagne_button"
-                (click)="useUpdateMode()"
+                (click)="openAddUpdateForm()"
             >
                 <mat-icon>
                     edit
@@ -15,7 +15,7 @@
             </button>
         </div>
         
-        <h4 class="author">empty</h4>
+        <h4 class="author">{{this.authorService.getConcatAuthors(book.authors)}}</h4>
 
         <div mat-dialog-content>
             <p>{{book.description}}</p>
@@ -25,13 +25,36 @@
 
         <mat-dialog-actions align="end">
             <button  mat-button mat-dialog-close>Back</button>
-            <mat-form-field color="primary">
-                <mat-label>Book Date</mat-label>
-                <input [formControl]="bookedDate" matInput [matDatepicker]="picker">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker color="primary" disabled="false"></mat-datepicker>
+            <mat-form-field>
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="bookedDateRange" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                <mat-error *ngIf="bookedDateRange.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="bookedDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
             </mat-form-field>
+            <!-- <form [formGroup]="bookedDate">
+                <mat-form-field color="primary">
+                    <mat-label>Start Book Date</mat-label>
+                    <input formControlName="startBookedDate" matInput [matDatepicker]="startDatePicker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startDatePicker color="primary" disabled="false"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field color="primary">
+                    <mat-label>End Book Date</mat-label>
+                    <input formControlName="endBookedDate" matInput [matDatepicker]="endDatePicker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle [disabled]="book.isBooked" matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker color="primary" disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </form> -->
+            
             <button
                 mat-raised-button 
                 color="primary" 
@@ -44,67 +67,5 @@
             </button>
         </mat-dialog-actions>
     </div>
-
-    <form 
-        *ngIf="!updateBookFormHidden" 
-        [formGroup]="updateBookForm"
-        class="updateBook_form"
-    >
-        <mat-form-field class="updateBook_input">
-            <mat-label>Name of Book</mat-label>
-            <input 
-                matInput 
-                formControlName="title"
-                [(ngModel)]="book.name"
-                required/>
-        </mat-form-field>
-        <mat-form-field class="updateBook_input">
-            <mat-label>Author</mat-label>
-            <input type="text" matInput formControlName="author" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let author of filteredAuthorsList" [value]="author">
-                {{author.name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-
-        <!-- <mat-form-field class="updateBook_input" >
-            <mat-label>Author</mat-label>
-            <input 
-                matInput 
-                formControlName="author"
-               
-                required
-            />
-        </mat-form-field> -->
-        <mat-form-field class="updateBook_input">
-            <mat-label>Description</mat-label>
-            <textarea  
-                matInput 
-                formControlName="description"
-                [(ngModel)]="book.description"
-                required
-            >
-            </textarea>
-        </mat-form-field>
-
-        <button 
-           
-            (click)="revertChanges()"
-            mat-raised-button
-            class="updateBook_button"
-        >
-            back
-        </button>
-        <button 
-            [disabled]="!updateBookForm.valid"
-            (click)="saveUpdateChanges()"
-            mat-raised-button
-            color="primary"
-            class="updateBook_button"
-        >
-            Save
-        </button>
-    </form>
 </section>
 

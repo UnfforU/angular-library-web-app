@@ -16,7 +16,7 @@ export class LibraryService {
   public get selectedLibrary() {
     return this._selectedLibrary;
   }
-  public set selectedLIbrary(value: Library) {
+  public set selectedLibrary(value: Library) {
     if(value != this._selectedLibrary)
       this._selectedLibrary = value;
   } 

@@ -8,42 +8,7 @@
         >
             <mat-icon>add_circle_outline</mat-icon>
         </button>
-        <form [formGroup]="addBookForm" *ngIf="!addBookFormHidden" class="addBook_form">
-            <mat-form-field class="addBook_input">
-                <mat-label>Name of Book</mat-label>
-                <input 
-                  matInput 
-                  formControlName="title"
-                  value="" 
-                  #title 
-                  required/>
-            </mat-form-field>
-            <mat-form-field class="addBook_input" >
-                <mat-label>Author</mat-label>
-                <input 
-                  matInput 
-                  formControlName="author"
-                  value="" 
-                  #author 
-                  required
-                />
-            </mat-form-field>
-            <mat-form-field class="addBook_input">
-                <mat-label>Description</mat-label>
-                <textarea  
-                  matInput 
-                  formControlName="description"
-                  value="" 
-                  #description 
-                  required></textarea>
-            </mat-form-field>
-
-            <button 
-                [disabled]="!addBookForm.valid"
-                mat-raised-button
-                (click)="saveNewBook(title.value, author.value, description.value)"
-                color="primary">Save</button>
-        </form>
+        
     </div>
 
 
@@ -53,7 +18,7 @@
                     {{book.name}}
                     <mat-icon *ngIf="book.isBooked">bookmark</mat-icon>
             </mat-card-title>
-            <mat-card-subtitle>empty</mat-card-subtitle>
+            <mat-card-subtitle>{{this.authorService.getConcatAuthors(book.authors)}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <p>{{book.description}}</p>

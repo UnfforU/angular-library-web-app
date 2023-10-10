@@ -5,6 +5,7 @@ import { AuthorizationComponent } from './authorization/authorization.component'
 import { LibraryComponent } from './library/library.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { authGuard } from './guards/auth.guard';
+import { AddChangeBookComponent } from './add-change-book/add-change-book.component';
 
 const routeConfig: Routes = [
   { path: '', redirectTo: '/authorization', pathMatch: 'full' },
