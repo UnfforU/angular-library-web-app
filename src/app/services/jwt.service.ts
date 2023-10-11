@@ -23,7 +23,7 @@ export class JwtService {
     console.log(this.decodedToken);
   }
 
-  private decodeToken(): DecodedToken | null {
+  public decodeToken(): DecodedToken | null {
     let token = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if(token){

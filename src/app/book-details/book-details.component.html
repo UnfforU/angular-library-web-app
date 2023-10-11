@@ -4,7 +4,7 @@
             
             <p class="title">{{book.name}}</p>
             <button 
-                *ngIf="isAdmin"
+                *ngIf="isAdmin()"
                 mat-icon-button 
                 class="chagne_button"
                 (click)="openAddUpdateForm()"
@@ -20,14 +20,18 @@
         <div mat-dialog-content>
             <p>{{book.description}}</p>
             <mat-divider></mat-divider>
-            <p *ngFor="let order of sortedOrderList">
-                Book was booked: {{order.startDateTime | date}} - {{order.endDateTime | date}}
-                    by {{this.userService.getUserNameById(order.userId)}}
-            </p>
+            <div *ngFor="let order of sortedOrderList">
+                <span>
+                    Book was ordered: {{order.startDateTime | date}} - {{order.endDateTime | date}}
+                    <span *ngIf="isAdmin()">by {{this.userService.getUserNameById(order.userId)}}</span>        
+                </span>
+            </div>
+            
+
         </div>  
 
-        <mat-dialog-actions align="end">
-            <button  mat-button mat-dialog-close cdkFocusInitial>Back</button>
+        <button  mat-button mat-dialog-close cdkFocusInitial>Back</button>
+        <mat-dialog-actions align="end" *ngIf="!isAdmin()">
             <mat-form-field>
                 <mat-label>Enter a date range</mat-label>
                 <mat-date-range-input [min]="nowDate" [dateFilter]="myFilter" [formGroup]="bookedDateRange" [rangePicker]="picker" >
@@ -42,12 +46,13 @@
                 <mat-error *ngIf="bookedDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
             </mat-form-field>
             <button
+                
                 mat-raised-button 
                 color="primary" 
             
                 (click)="serveBook()"
             >
-                Book
+                Order
             </button>
         </mat-dialog-actions>
     </div>

@@ -24,6 +24,14 @@ export class AuthorService {
       )
   }
 
+  public addAuthor(item: Author): Observable<Author> {
+    return this.http.post<Author>(`${this.reposUrl}/Authors`, item)
+      .pipe(
+        tap((author: Author) => console.log('added author w/', author)),
+        catchError(this.errHandler.handleError<Author>('addAuthor'))
+      )
+  } 
+
   public getConcatAuthors(authorsList: Author[]): string {
     return Array.from(authorsList, (author) => author.name).join(", ");
   }

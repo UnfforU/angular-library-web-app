@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
-import { Book, Library, User } from '../models/models';
+import { Book, Library, User, UserRole } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -45,6 +45,10 @@ export class BooksComponent {
 
   public ngOnInit(){
     console.log("books on init");
+  }
+
+  protected isAdmin(): boolean {
+    return this.userService.currUser.userRole == UserRole.admin
   }
 
   protected openBookDetails(chosenBook: Book): void {

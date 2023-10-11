@@ -1,10 +1,12 @@
+import { UserRole } from "./models";
+
 export interface Token {
     access_token: string
 }
 
 export interface DecodedToken {
-    sub: string;
-    isAdmin: string;
     name: string;
+    sub: string;
+    role: UserRole;
     exp: number;
 }

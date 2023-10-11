@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Book, Order } from '../models/models';
+import { Book, Order, UserRole } from '../models/models';
 import { BookService } from '../services/book.service';
 import { UserService } from '../services/user.service';
 import { AuthorService } from '../services/author.service';
@@ -27,8 +27,6 @@ export class BookDetailsComponent {
   public bookedPeriodEnds: Date = new Date();
   public nowDate: Date = new Date();
   
-  public isAdmin: boolean | undefined = this.userService.currUser?.isAdmin;
-
   protected updateBookFormHidden = true;
   
   public bookedDateRange = new FormGroup({
@@ -45,7 +43,13 @@ export class BookDetailsComponent {
     
   ){
     this.book = this.bookService.selectedBook;
+    console.log("book-details comn");
     this.sortedOrderList = this.book.orders.sort(order => new Date(order.startDateTime).getTime());
+    console.log(this.sortedOrderList);
+  }
+
+  protected isAdmin(): boolean{
+    return this.userService.currUser.userRole == UserRole.admin
   }
   protected myFilter = (d: Date): boolean => {
     return this.myFilterFunc(d)

@@ -4,6 +4,7 @@ import { Login } from '../models/models';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-authorization',
@@ -19,6 +20,7 @@ export class AuthorizationComponent {
   public constructor(
     private router: Router,
     private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar
   ){}
 
@@ -26,8 +28,10 @@ export class AuthorizationComponent {
     console.log({username, password});
     this.authService.logIn({username, password} as Login)
       .subscribe({
-        
-        complete: () => this.router.navigate(['/library']),
+        complete: () => {
+          this.userService.setUser();
+          this.router.navigate(['/library']);
+        },
         error: () => this.openSnackBar("Name or Password is incorrect. Try again! ", "Fine", {duration: 3000})}
       );
   }

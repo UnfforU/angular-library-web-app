@@ -11,9 +11,7 @@ import { REPOS_API_URL } from '../app-injection-tokens';
   providedIn: 'root'
 })
 export class UserService {
-
-  currUser: User;
-
+  public currUser: User = {} as User;
   private allUsers: User[] = [];
 
   constructor(
@@ -22,23 +20,25 @@ export class UserService {
     private http: HttpClient,
     private errHandler: ErrorHandlerService
   ) { 
-    
-    if(this.jwtService.decodedToken){
-      this.currUser = {
-        userId: this.jwtService.decodedToken.sub,
-        userName: this.jwtService.decodedToken.name,
-        isAdmin: true
-      } as User;
-    } 
-    else {
-      this.currUser = {} as User;
-    }
-
-    console.log("constructor userService");
-    console.log(this.currUser);
-
+    this.setUser();
     this.getAllUsers();
     console.log(`all users: ${this.allUsers}`);
+  }
+
+    public setUser() {
+      let decodedToken = this.jwtService.decodeToken()
+      if(decodedToken){
+        this.currUser = {
+          userId: decodedToken.sub,
+          userName: decodedToken.name,
+          userRole: decodedToken.role
+        } as User;
+      } 
+      else {
+        this.currUser = {} as User;
+      }
+      console.log("setUser");
+      console.log(this.currUser);
   }
 
   private getAllUsers() {

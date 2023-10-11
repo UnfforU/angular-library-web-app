@@ -37,5 +37,10 @@ export interface User {
     userId: string;
     userName: string;
     password: string;
-    isAdmin: boolean;
+    userRole: UserRole;
+}
+
+export enum UserRole {
+    defaultUser = 1,
+    admin = 2
 }

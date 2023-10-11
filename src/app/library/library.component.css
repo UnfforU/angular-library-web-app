@@ -1,25 +1,12 @@
 .header_main {
     display: block;
     min-height: 100px;
+   
 }
 
 .header-spacer {
     flex: 1 1 auto;
   }
-
-.title {
-    padding: 20px 0px 0px 2%;
-    display: inline-block;
-    text-align: left;
-    width: 48%;
-    font-size: 30px;
-}
-
-
-.main_header_block {
-    width: 100%;
-    text-align: center;
-}
 
 .username {
     font-size: 15px;
@@ -34,14 +21,20 @@
 }
 
 
-.books_and_libraries {
+.libraries {
+    display: flex;
+    
+    min-width: 220px
+}
+
+.main_content {
     display: flex;
 }
 
 
-
 .libraries_list_title_button {
     display: block;
+    margin-left: 15px;
 }
 
 .libraries_list_title {

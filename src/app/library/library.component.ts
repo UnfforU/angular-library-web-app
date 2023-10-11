@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Library, Book, User } from '../models/models';
+import { Library, Book, User, UserRole } from '../models/models';
 import { LibraryService } from '../services/library.service';
 import { AuthService } from '../services/auth.service';
 import { BookService } from '../services/book.service';
@@ -20,7 +20,7 @@ export class LibraryComponent implements OnInit {
   public addNewLibraryMode: boolean = false;
   public chosenBooks: Book[] = [];
 
-  protected user: User;
+  protected user: User = {} as User;
 
   public addLibraryForm = new FormGroup({
     name: new FormControl('', Validators.required)
@@ -30,18 +30,23 @@ export class LibraryComponent implements OnInit {
     public libraryService: LibraryService,
     private authService: AuthService,
     private bookService: BookService,
-    private userService: UserService,
+    protected userService: UserService,
     private snackBar: MatSnackBar
   ) {
-
    
-    this.user = this.userService.currUser;
-
-    console.log(`const library ${this.user}`);
   }
 
   public ngOnInit(): void {
+    this.user = this.userService.currUser;
     this.getLibraries();
+  }
+
+  protected getUserName(): string {
+    return this.userService.currUser.userName;
+  }
+
+  protected isAdmin(): boolean {
+    return this.userService.currUser.userRole == UserRole.admin
   }
 
   public logOut(): void {
