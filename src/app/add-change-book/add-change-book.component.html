@@ -1,25 +1,29 @@
 <section class="addChangeBook_section">
-    <form 
-        [formGroup]="addUpdBookForm"
-        class="updateBook_form"
-    >
+    <form [formGroup]="addUpdBookForm" class="updateBook_form">
         <mat-form-field class="updateBook_input">
             <mat-label>Name of Book</mat-label>
             <input 
                 #title
                 matInput 
                 formControlName="title"
-                required/>
+                required
+            />
         </mat-form-field>
         <mat-form-field class="updateBook_input">
             <mat-label>Author</mat-label>
-            <input type="text" matInput formControlName="author" [matAutocomplete]="auto" #author>
+            <input 
+                type="text" 
+                matInput 
+                formControlName="author" 
+                [matAutocomplete]="auto" 
+                #author
+            >
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let author of filteredAuthorsList" [value]="author">
-                {{author.name}}
-              </mat-option>
+                <mat-option *ngFor="let author of filteredAuthorsList" [value]="author">
+                    {{author.name}}
+                </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+        </mat-form-field>
         <mat-form-field class="updateBook_input">
             <mat-label>Description</mat-label>
             <textarea  

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Author, Book } from '../models/models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map, startWith } from 'rxjs';
+
+import { Author, Book } from '../models/models';
 import { BookService } from '../services/book.service';
 import { AuthorService } from '../services/author.service';
-import { map, startWith } from 'rxjs';
 import { LibraryService } from '../services/library.service';
 
 @Component({
@@ -12,7 +13,6 @@ import { LibraryService } from '../services/library.service';
   styleUrls: ['./add-change-book.component.css']
 })
 export class AddChangeBookComponent {
-  public oldVersionBook?: Book;
   public book: Book;
 
   public authorsList: Author[] = []; 
@@ -22,7 +22,7 @@ export class AddChangeBookComponent {
     title: new FormControl('', Validators.required),
     author: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required)
-  })
+  });
 
   public constructor(
     private bookService: BookService,
@@ -32,11 +32,9 @@ export class AddChangeBookComponent {
     this.book = this.bookService.selectedBook;
 
     if(this.book.bookId){
-      console.log("ERROR");
       this.addUpdBookForm.get('title')?.setValue(`${this.book.name}`);
       this.addUpdBookForm.get('author')?.setValue(`${this.book.authors[0].name}`);
       this.addUpdBookForm.get('description')?.setValue(`${this.book.description}`);
-  
     }
   }
 
@@ -46,7 +44,6 @@ export class AddChangeBookComponent {
         authors => {
           this.authorsList = authors,
           this.filteredAuthorsList = this.authorsList
-          console.log(this.authorsList);
         }
       );
   
@@ -98,9 +95,6 @@ export class AddChangeBookComponent {
         () => console.log("call addBook")
       )
     }
-
     console.log(`AddChangeFormClosed = ${this.bookService.selectedBook.bookId}`);
   }
-
-
 }

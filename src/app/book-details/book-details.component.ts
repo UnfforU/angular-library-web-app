@@ -48,9 +48,8 @@ export class BookDetailsComponent {
     console.log(this.sortedOrderList);
   }
 
-  protected isAdmin(): boolean{
-    return this.userService.currUser.userRole == UserRole.admin
-  }
+  protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
+  
   protected myFilter = (d: Date): boolean => {
     return this.myFilterFunc(d)
   };

@@ -47,9 +47,7 @@ export class BooksComponent {
     console.log("books on init");
   }
 
-  protected isAdmin(): boolean {
-    return this.userService.currUser.userRole == UserRole.admin
-  }
+  protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
 
   protected openBookDetails(chosenBook: Book): void {
     console.log(this.books);

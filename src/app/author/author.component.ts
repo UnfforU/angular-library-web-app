@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Author, UserRole } from '../models/models';
-import { AuthorService } from '../services/author.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { Author, UserRole } from '../models/models';
+import { AuthorService } from '../services/author.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -18,19 +19,17 @@ export class AuthorComponent {
     name: new FormControl('', Validators.required)
   });
 
-  
   constructor(
     private authorService: AuthorService,
-    private snackBar: MatSnackBar,
     private userService: UserService,
+    private snackBar: MatSnackBar,
   ){
     this.authorService.getAuthors()
       .subscribe(authorsList => this.authorsList = authorsList);
   }
 
-  protected isAdmin(): boolean {
-    return this.userService.currUser.userRole == UserRole.admin
-  }
+  protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
+
   protected changeAddAuthorMode(){
     this.addNewAuthorMode = !this.addNewAuthorMode;
     this.addAuthorForm.reset();
@@ -41,7 +40,6 @@ export class AuthorComponent {
       this.authorService.addAuthor({name} as Author)
         .subscribe({
           next: (author) => {
-            console.log({author});
             this.authorsList.push(author)
             this.changeAddAuthorMode();
             this.snackBar.open(`Author: "${author.name}" successfully added!`, "Ok", {duration: 3000});

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { Login } from '../models/models';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AuthService } from '../services/auth.service';
+import { Login } from '../models/models';
 import { UserService } from '../services/user.service';
 
 @Component({
