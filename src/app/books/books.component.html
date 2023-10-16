@@ -11,12 +11,15 @@
         
     </div>
 
-    <!-- <input id="file" type="file"> -->
+    <!--  -->
     <mat-card *ngFor="let book of books" class="book_card" >
-        <mat-card-header >
-            <mat-card-title >
+        <mat-card-header>
+            <mat-card-title>
                     {{book.name}}
                     <mat-icon *ngIf="book.orders.length != 0">bookmark</mat-icon>
+                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+                    <button type="button" mat-raised-button (click)="getFileByBookId(book.bookId)">Get File</button>
             </mat-card-title>
             <mat-card-subtitle>{{this.authorService.getConcatAuthors(book.authors)}}</mat-card-subtitle>
         </mat-card-header>

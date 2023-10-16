@@ -1,16 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { BookDetailsComponent } from '../book-details/book-details.component';
 
 import { BookService } from '../services/book.service';
 import { Book, Library, User, UserRole } from '../models/models';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
 import { AddChangeBookComponent } from '../add-change-book/add-change-book.component';
 import { AuthorService } from '../services/author.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import * as FileSaver from 'file-saver';
+import { Buffer } from 'buffer/';
+
+
 
 @Component({
   selector: 'app-books',
@@ -25,6 +29,8 @@ export class BooksComponent {
   public addBookFormHidden: boolean = true;
 
   public user: User;
+
+  public fileName: string = "";
 
   public addBookForm = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -48,6 +54,51 @@ export class BooksComponent {
   }
 
   protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
+
+  protected onFileSelected(event: any) {
+    // const inputNode: any = document.querySelector('#file');
+  
+    // if (typeof (FileReader) !== 'undefined') {
+    //   const reader = new FileReader();
+  
+    //   console.log(inputNode);
+    //   reader.onload = (e: any) => {
+    //     this.srcResult = e.target.result;
+    //     console.log(`result= ${this.srcResult}`);
+    //     console.log("nice");
+    //   };
+  
+    //   reader.readAsArrayBuffer(inputNode.files[0]);
+    // }
+
+    const file:File = event.target.files[0];
+
+        if (file) {
+
+            this.fileName = file.name;
+
+            const formData = new FormData();
+            formData.append("file", file);
+            console.log(formData);
+            
+            this.bookService.uploadFile(formData).subscribe(res => console.log('File Uploaded ...'));
+
+          
+
+            // const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+            // upload$.subscribe();
+        }
+  }
+
+  protected getFileByBookId(bookId: string): void {
+    this.bookService.getFileByBookId(bookId)
+      .subscribe((res) => {
+        let blob = Buffer.from(res.fileContent, 'base64');
+        const file = new Blob([blob], {type: res.contentType});
+        FileSaver.saveAs(file, res.fileName);
+    });
+  }
 
   protected openBookDetails(chosenBook: Book): void {
     console.log(this.books);

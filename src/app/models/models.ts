@@ -44,3 +44,11 @@ export enum UserRole {
     defaultUser = "DefaultUser",
     admin = "Admin"
 }
+
+export interface FileDTO {
+    fileId: string;
+    fileName: string;
+    contentType: string;
+    fileContent: string;
+    bookId: string;
+}
