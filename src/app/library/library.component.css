@@ -1,36 +1,20 @@
-.header_main {
-    display: block;
-    min-height: 100px;
-   
-}
-
-.header-spacer {
+.header_spacer {
     flex: 1 1 auto;
-  }
+}
 
 .username {
     font-size: 15px;
     padding-right: 10px;
-    
-    
-}
-
-.logOut_button {
-    text-align: right;
-    margin: 0px 30px 10px 0px;
-}
-
-
-.libraries {
-    display: flex;
-    
-    min-width: 220px
 }
 
 .main_content {
     display: flex;
 }
 
+.libraries {
+    display: flex;
+    min-width: 220px
+}
 
 .libraries_list_title_button {
     display: block;
@@ -42,5 +26,3 @@
     vertical-align:text-bottom;
     margin-right: 10px;
 }
-
-

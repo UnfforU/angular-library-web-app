@@ -9,8 +9,7 @@ import { authGuard } from './guards/auth.guard';
 const routeConfig: Routes = [
   { path: '', redirectTo: '/authorization', pathMatch: 'full' },
   { path: 'authorization', component: AuthorizationComponent, title: 'Authorization Page' },
-  { path: 'library', component: LibraryComponent, title: 'Library Page', canActivate: [authGuard]},
-  // { path: 'bookdetails', component: BookDetailsComponent, title: 'Book Details' },
+  { path: 'library', component: LibraryComponent, title: 'Library Page', canActivate: [authGuard]}
 ];
 
 @NgModule({

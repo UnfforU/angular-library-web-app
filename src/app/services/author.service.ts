@@ -1,15 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable, catchError, tap } from 'rxjs';
+
 import { REPOS_API_URL } from '../app-injection-tokens';
 import { Author } from '../models/models';
-import { Observable, catchError, tap } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorService {
-
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,
     private http: HttpClient,

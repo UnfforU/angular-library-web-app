@@ -18,12 +18,11 @@ export class AuthService {
 
 
   public constructor(
-    private http: HttpClient,
     @Inject(REPOS_API_URL) private apiUrl: string,
+    private http: HttpClient,
     public jwtHelper: JwtHelperService,
     private router: Router
   ) { 
-
   }
 
   public logIn(login: Login): Observable<Token> {
@@ -37,7 +36,7 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     let token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    console.log("check 'isAuthenificated'");
+    console.log("check 'isAuthenticated'");
     return token != null && !this.jwtHelper.isTokenExpired(token)
   }
 

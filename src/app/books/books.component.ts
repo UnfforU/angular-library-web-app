@@ -3,18 +3,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as FileSaver from 'file-saver';
+import { Buffer } from 'buffer/';
 
 import { BookDetailsComponent } from '../book-details/book-details.component';
-
 import { BookService } from '../services/book.service';
 import { Book, Library, User, UserRole } from '../models/models';
 import { UserService } from '../services/user.service';
 import { AddChangeBookComponent } from '../add-change-book/add-change-book.component';
 import { AuthorService } from '../services/author.service';
-import * as FileSaver from 'file-saver';
-import { Buffer } from 'buffer/';
-
-
+import { FileLoaderService } from '../services/file-loader.service';
 
 @Component({
   selector: 'app-books',
@@ -27,11 +25,8 @@ export class BooksComponent {
   @Output() notifyBookCollectionChanged = new EventEmitter();
 
   public addBookFormHidden: boolean = true;
-
   public user: User;
-
   public fileName: string = "";
-
   public addBookForm = new FormGroup({
     title: new FormControl('', Validators.required),
     author: new FormControl('', Validators.required),
@@ -40,12 +35,12 @@ export class BooksComponent {
 
   public constructor(
     public dialog: MatDialog,
-    private bookService: BookService,
-    private userService: UserService,
     protected authorService: AuthorService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ){
+    private bookService: BookService,
+    private fileLoaderService: FileLoaderService,
+    private userService: UserService,
+    private snackBar: MatSnackBar,
+  ) {
     this.user = this.userService.currUser
   }
 
@@ -56,43 +51,20 @@ export class BooksComponent {
   protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
 
   protected onFileSelected(event: any) {
-    // const inputNode: any = document.querySelector('#file');
-  
-    // if (typeof (FileReader) !== 'undefined') {
-    //   const reader = new FileReader();
-  
-    //   console.log(inputNode);
-    //   reader.onload = (e: any) => {
-    //     this.srcResult = e.target.result;
-    //     console.log(`result= ${this.srcResult}`);
-    //     console.log("nice");
-    //   };
-  
-    //   reader.readAsArrayBuffer(inputNode.files[0]);
-    // }
-
     const file:File = event.target.files[0];
-
-        if (file) {
-
-            this.fileName = file.name;
-
-            const formData = new FormData();
-            formData.append("file", file);
-            console.log(formData);
-            
-            this.bookService.uploadFile(formData).subscribe(res => console.log('File Uploaded ...'));
-
-          
-
-            // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-            // upload$.subscribe();
-        }
+    if (file) {
+      this.fileName = file.name;
+      const formData = new FormData();
+      formData.append("file", file);
+      this.fileLoaderService.uploadFile(formData)
+        .subscribe(res => {
+          console.log('File Uploaded ...');
+        });
+    }
   }
 
   protected getFileByBookId(bookId: string): void {
-    this.bookService.getFileByBookId(bookId)
+    this.fileLoaderService.getFileByBookId(bookId)
       .subscribe((res) => {
         let blob = Buffer.from(res.fileContent, 'base64');
         const file = new Blob([blob], {type: res.contentType});
@@ -101,15 +73,10 @@ export class BooksComponent {
   }
 
   protected openBookDetails(chosenBook: Book): void {
-    console.log(this.books);
     console.log(chosenBook);
     this.bookService.selectedBook = chosenBook;
     const dialogRef = this.dialog.open(BookDetailsComponent);
-
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        
-      }
       console.log(`Dialog result: ${result}`);
     });
   }
@@ -121,7 +88,6 @@ export class BooksComponent {
       if(result){
         console.log(`Dialog result: ${result}`);
         console.log(this.bookService.selectedBook);
-        // this.books.push(this.bookService.selectedBook);
         this.notifyBookCollectionChanged.emit();
         this.snackBar.open(`Library: "${this.bookService.selectedBook.name}" successfully added!`, "Ok", {duration: 3000});
       }

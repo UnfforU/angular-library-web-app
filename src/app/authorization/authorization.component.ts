@@ -33,7 +33,9 @@ export class AuthorizationComponent {
           this.userService.setUser();
           this.router.navigate(['/library']);
         },
-        error: () => this.openSnackBar("Name or Password is incorrect. Try again! ", "Fine", {duration: 3000})}
+        error: () => 
+          this.openSnackBar("Name or Password is incorrect. Try again! ", "Fine", {duration: 3000})
+        }
       );
   }
   

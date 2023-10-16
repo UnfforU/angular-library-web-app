@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
+import { catchError, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 import { JwtService } from './jwt.service';
 import { User } from '../models/models';
-import { DecodedToken } from '../models/token';
-import { Observable, catchError, tap } from 'rxjs';
 import { ErrorHandlerService } from './error-handler.service';
-import { HttpClient } from '@angular/common/http';
 import { REPOS_API_URL } from '../app-injection-tokens';
 
 @Injectable({
@@ -12,6 +12,7 @@ import { REPOS_API_URL } from '../app-injection-tokens';
 })
 export class UserService {
   public currUser: User = {} as User;
+  
   private allUsers: User[] = [];
 
   constructor(
@@ -25,31 +26,32 @@ export class UserService {
     console.log(`all users: ${this.allUsers}`);
   }
 
-    public setUser() {
-      let decodedToken = this.jwtService.decodeToken()
-      if(decodedToken){
-        this.currUser = {
-          userId: decodedToken.sub,
-          userName: decodedToken.name,
-          userRole: decodedToken.role
-        } as User;
-      } 
-      else {
-        this.currUser = {} as User;
-      }
-      console.log("setUser");
-      console.log(this.currUser);
+  public setUser() {
+    let decodedToken = this.jwtService.decodeToken()
+    if(decodedToken) {
+      this.currUser = {
+        userId: decodedToken.sub,
+        userName: decodedToken.name,
+        userRole: decodedToken.role
+      } as User;
+    } 
+    else {
+      this.currUser = {} as User;
+    }
+    console.log("setUser");
+    console.log(this.currUser);
   }
 
   private getAllUsers() {
     return this.http.get<User[]>(`${this.reposUrl}/Users`)
       .pipe(
         tap((users: User[]) => console.log('fetched users', users)),
-        catchError(this.errHandler.handleError<User[]>('getLibrary', []))
+        catchError(this.errHandler.handleError<User[]>('getAllUsers', []))
       )
       .subscribe(users => { 
         this.allUsers = users,
-        console.log(this.allUsers) })
+        console.log(this.allUsers) 
+      });
   }
 
   public getUserNameById(id: string): string {

@@ -14,7 +14,6 @@ import { LibraryService } from '../services/library.service';
 })
 export class AddChangeBookComponent {
   public book: Book;
-
   public authorsList: Author[] = []; 
   public filteredAuthorsList: Author[] = [];
 
@@ -40,8 +39,7 @@ export class AddChangeBookComponent {
 
   public ngOnInit(): void {
     this.authorService.getAuthors()
-      .subscribe(
-        authors => {
+      .subscribe(authors => {
           this.authorsList = authors,
           this.filteredAuthorsList = this.authorsList
         }
@@ -57,10 +55,6 @@ export class AddChangeBookComponent {
         );
   }
 
-  private _filter(value: string): Author[] {
-    return this.authorsList.filter(author => author.name.toLowerCase().includes(value.toLowerCase()))
-  }
-
   protected displayFn(author: Author): string {
     return author && author.name ? author.name : '';
   }
@@ -72,11 +66,10 @@ export class AddChangeBookComponent {
       let updBook = this.bookService.selectedBook;
       updBook.name = title;
       updBook.description = description;
-      
       if(author)
         updBook.authors.push(author);
-      description = description;
 
+      description = description;
       this.bookService.selectedBook = updBook;
       this.bookService.updateBook(updBook)
     }
@@ -96,5 +89,9 @@ export class AddChangeBookComponent {
       )
     }
     console.log(`AddChangeFormClosed = ${this.bookService.selectedBook.bookId}`);
+  }
+
+  private _filter(value: string): Author[] {
+    return this.authorsList.filter(author => author.name.toLowerCase().includes(value.toLowerCase()))
   }
 }

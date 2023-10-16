@@ -27,23 +27,21 @@ export class BookDetailsComponent {
   public bookedPeriodEnds: Date = new Date();
   public nowDate: Date = new Date();
   
-  protected updateBookFormHidden = true;
-  
   public bookedDateRange = new FormGroup({
     start: new FormControl(new Date(), Validators.required),
     end: new FormControl(new Date(), Validators.required),
   });
 
+  protected updateBookFormHidden = true;
+
   constructor(
     public dialog: MatDialog,
-    private bookService: BookService,
     protected userService: UserService,
     protected authorService: AuthorService,
+    private bookService: BookService,
     private orderService: OrderService,
-    
   ){
     this.book = this.bookService.selectedBook;
-    console.log("book-details comn");
     this.sortedOrderList = this.book.orders.sort(order => new Date(order.startDateTime).getTime());
     console.log(this.sortedOrderList);
   }
@@ -53,10 +51,35 @@ export class BookDetailsComponent {
   protected myFilter = (d: Date): boolean => {
     return this.myFilterFunc(d)
   };
+
+  protected openAddUpdateForm(): void {
+    const dialogRef = this.dialog.open(AddChangeBookComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        console.log(`Dialog result: ${result}`);
+      }
+    });
+  }
+
+  protected serveBook(): void {
+    let newOrder = {
+      userId: this.userService.currUser.userId,
+      bookId: this.bookService.selectedBook.bookId,
+      startDateTime: this.addHours(this.bookedDateRange.get('start')?.value!, 3),
+      endDateTime: this.addHours(this.bookedDateRange.get('end')?.value!, 3),
+    } as Order;
+    console.log(newOrder);
+    this.bookedDateRange.reset();
+    this.orderService.createOrder(newOrder)
+      .subscribe((order) => {
+        this.bookService.selectedBook.orders.push(order);
+        console.log(`new order ${order}`);
+      })
+  }
+
   private myFilterFunc(d: Date): boolean {
     let ordersList = this.bookService.selectedBook.orders;
     var dateRanges: DateRange[] = [];
-   
     ordersList.forEach(order => {
       dateRanges.push({
         start: this.removeTime(new Date(order.startDateTime)), 
@@ -71,19 +94,8 @@ export class BookDetailsComponent {
     return res
   } 
 
-  protected openAddUpdateForm(): void {
-    const dialogRef = this.dialog.open(AddChangeBookComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        console.log(`Dialog result: ${result}`);
-      }
-      
-    });
-  }
-
   private addHours(date: Date, hours: number) {
     date.setTime(date.getTime() + hours * 60 * 60 * 1000);
-  
     return date;
   }
 
@@ -93,22 +105,5 @@ export class BookDetailsComponent {
       date.getMonth(),
       date.getDate(),
     );
-  }
-
-  protected serveBook(): void {
-    let newOrder = {
-      userId: this.userService.currUser.userId,
-      bookId: this.bookService.selectedBook.bookId,
-      startDateTime: this.addHours(this.bookedDateRange.get('start')?.value!, 3),
-      endDateTime: this.addHours(this.bookedDateRange.get('end')?.value!, 3),
-    } as Order;
-    console.log(newOrder);
-
-    this.bookedDateRange.reset();
-    this.orderService.createOrder(newOrder)
-      .subscribe((order) => {
-        this.bookService.selectedBook.orders.push(order);
-        console.log(`new order ${order}`);
-      })
   }
 }

@@ -8,7 +8,6 @@ import { DecodedToken } from '../models/token';
   providedIn: 'root'
 })
 export class JwtService {
-
   public decodedToken: DecodedToken | null;
 
   public constructor() 
@@ -17,7 +16,6 @@ export class JwtService {
   }
 
   public onInit():void {
-
     console.log('constructor decode');
     this.decodedToken = this.decodeToken();
     console.log(this.decodedToken);
@@ -25,11 +23,10 @@ export class JwtService {
 
   public decodeToken(): DecodedToken | null {
     let token = localStorage.getItem(ACCESS_TOKEN_KEY);
-
-    if(token){
+    if(token) {
       return jwt_decode(token);
     }
-    else{
+    else {
       return null;
     }
   }

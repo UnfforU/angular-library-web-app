@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Library } from '../models/models';
 import { REPOS_API_URL } from '../app-injection-tokens';
@@ -11,8 +11,13 @@ import { ErrorHandlerService } from './error-handler.service';
   providedIn: 'root'
 })
 export class LibraryService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type' : 'application/json'
+    })
+  };
+
   private _selectedLibrary: Library = {} as Library;
-  
   public get selectedLibrary() {
     return this._selectedLibrary;
   }
@@ -20,21 +25,12 @@ export class LibraryService {
     if(value != this._selectedLibrary)
       this._selectedLibrary = value;
   } 
-
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type' : 'application/json'
-    })
-  };
   
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,
     private http: HttpClient,
     private errHandler: ErrorHandlerService
   ) { }
-
-  
   
   public getLibraries(): Observable<Library[]> {
     return this.http.get<Library[]>(`${this.reposUrl}/Libraries`)

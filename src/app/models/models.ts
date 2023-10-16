@@ -25,19 +25,18 @@ export interface Order {
 export interface Author {
     authorId: string,
     name: string
-
 }
 
 export interface Login {
-    username: string;
-    password: string;
+    username: string,
+    password: string
 }
 
 export interface User {
-    userId: string;
-    userName: string;
-    password: string;
-    userRole: UserRole;
+    userId: string,
+    userName: string,
+    password: string,
+    userRole: UserRole
 }
 
 export enum UserRole {
@@ -46,9 +45,9 @@ export enum UserRole {
 }
 
 export interface FileDTO {
-    fileId: string;
-    fileName: string;
-    contentType: string;
-    fileContent: string;
-    bookId: string;
+    fileId: string,
+    fileName: string,
+    contentType: string,
+    fileContent: string,
+    bookId: string
 }

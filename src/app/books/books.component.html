@@ -3,25 +3,42 @@
         <h1 class="books_list_title">Books</h1>
         <button 
             *ngIf="isAdmin()"
-            mat-icon-button
             (click)="addBook()"
+            mat-icon-button
         >
             <mat-icon>add_circle_outline</mat-icon>
         </button>
-        
     </div>
-
-    <!--  -->
     <mat-card *ngFor="let book of books" class="book_card" >
         <mat-card-header>
             <mat-card-title>
-                    {{book.name}}
-                    <mat-icon *ngIf="book.orders.length != 0">bookmark</mat-icon>
-                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
-                    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
-                    <button type="button" mat-raised-button (click)="getFileByBookId(book.bookId)">Get File</button>
+                {{book.name}}
+                <mat-icon *ngIf="book.orders.length != 0">bookmark</mat-icon>
+                <button 
+                    (click)="fileInput.click()"
+                    type="button" 
+                    mat-raised-button 
+                >
+                    Choose File
+                </button>
+                <input 
+                    (change)="onFileSelected($event)" 
+                    hidden 
+                    #fileInput 
+                    type="file" 
+                    id="file"
+                >
+                <button
+                    (click)="getFileByBookId(book.bookId)"
+                    type="button" 
+                    mat-raised-button 
+                >
+                    Get File
+                </button>
             </mat-card-title>
-            <mat-card-subtitle>{{this.authorService.getConcatAuthors(book.authors)}}</mat-card-subtitle>
+            <mat-card-subtitle>
+                {{this.authorService.getConcatAuthors(book.authors)}}
+            </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <p>{{book.description}}</p>
@@ -29,17 +46,17 @@
         <mat-card-actions align="end">
             <button 
                 *ngIf="isAdmin()"
-                mat-icon-button 
                 (click)="deleteBook(book)"
+                mat-icon-button 
             >
                 <mat-icon>delete</mat-icon>
             </button>
             <button 
-              mat-raised-button
-              color="primary" 
-              (click)="openBookDetails(book)"
+                (click)="openBookDetails(book)"
+                mat-raised-button
+                color="primary" 
             >
-              MORE
+                MORE
             </button>
         </mat-card-actions>
     </mat-card> 

@@ -45,6 +45,7 @@ export class AuthorComponent {
             this.snackBar.open(`Author: "${author.name}" successfully added!`, "Ok", {duration: 3000});
           },
           error: () => 
-            this.snackBar.open("Can't add new author. Try Again", "Ok", {duration: 3000})});
+            this.snackBar.open("Can't add new author. Try Again", "Ok", {duration: 3000})
+        });
   }
 }

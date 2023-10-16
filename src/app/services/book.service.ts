@@ -1,58 +1,36 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, of, tap } from 'rxjs';
-
-
+import { Observable, catchError, tap } from 'rxjs';
 
 import { REPOS_API_URL } from '../app-injection-tokens';
-import { Book, FileDTO } from '../models/models';
+import { Book } from '../models/models';
 import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type' : 'application/json'
+    })
+  };
+
   private _selectedBook: Book = {} as Book;
   public get selectedBook() {
     return this._selectedBook
   }
   public set selectedBook(value: Book) {
     if(value != this._selectedBook)
-      this._selectedBook = value
-    
+      this._selectedBook = value 
   }
-  
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type' : 'application/json'
-    })
-  };
-  private options = { responseType:'blob' as 'json'
-};
 
   constructor(
     @Inject(REPOS_API_URL) private reposUrl: string,
     private http: HttpClient,
     private errHandler: ErrorHandlerService
   ) { }
-
-  public uploadFile(item: FormData): Observable<boolean>{
-    return this.http.post<boolean>(`${this.reposUrl}/Files`, item)
-      .pipe(
-        tap((res: boolean) => console.log(res)),
-        catchError(this.errHandler.handleError<boolean>('addBook'))
-      );
-  }
-
   
-  public getFileByBookId(bookId: string): Observable<FileDTO> {
-    return this.http.get<FileDTO>(`${this.reposUrl}/Files/${bookId}`)
-    .pipe(
-      tap(_ => console.log(`get file by book id=${bookId}`)),
-      catchError(this.errHandler.handleError<FileDTO>('getFileByBookId'))
-    );
-  }
-
   public addBook(item: Book): Observable<Book> {
     return this.http.post<Book>(`${this.reposUrl}/Books`, item, this.httpOptions)
       .pipe(

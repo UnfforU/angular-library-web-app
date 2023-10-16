@@ -3,8 +3,8 @@
         <h1 class="author_list_title">Authors</h1>
         <button 
             *ngIf="isAdmin()"
-            mat-icon-button
             (click)="changeAddAuthorMode()"
+            mat-icon-button
         >
             <mat-icon>add_circle_outline</mat-icon>
         </button>
@@ -23,12 +23,12 @@
                     type="text" 
                 >
                 <button 
-                    mat-icon-button
                     (click)="addAuthor(authorName.value)"
+                    mat-icon-button
                     matSuffix 
                     aria-label="Add" 
                 >
-                  <mat-icon>check</mat-icon>
+                    <mat-icon>check</mat-icon>
                 </button>
                 <mat-error *ngIf="!addAuthorForm.valid">Input can't be empty</mat-error>
             </mat-form-field>
@@ -36,9 +36,7 @@
     </div>
 
     <mat-list *ngFor="let author of authorsList" role="authors" >
-        <mat-list-item >
-            {{author.name}}
-        </mat-list-item>
+        <mat-list-item>{{author.name}}</mat-list-item>
         <mat-divider></mat-divider>
     </mat-list>
 </section>
