@@ -13,7 +13,7 @@
         <mat-card-header>
             <mat-card-title>
                 {{book.name}}
-                <mat-icon *ngIf="book.orders.length != 0">bookmark</mat-icon>
+                <mat-icon *ngIf="book.orders && book.orders.length != 0">bookmark</mat-icon>
                 <button 
                     (click)="fileInput.click()"
                     type="button" 
@@ -37,7 +37,7 @@
                 </button>
             </mat-card-title>
             <mat-card-subtitle>
-                {{this.authorService.getConcatAuthors(book.authors)}}
+                {{getConcatAuthors(book)}}
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

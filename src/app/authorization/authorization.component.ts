@@ -19,10 +19,10 @@ export class AuthorizationComponent {
   })
 
   public constructor(
-    private router: Router,
-    private authService: AuthService,
-    private userService: UserService,
-    private snackBar: MatSnackBar
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly snackBar: MatSnackBar
   ){}
 
   protected logIn(username: string, password: string): void {
@@ -34,7 +34,7 @@ export class AuthorizationComponent {
           this.router.navigate(['/library']);
         },
         error: () => 
-          this.openSnackBar("Name or Password is incorrect. Try again! ", "Fine", {duration: 3000})
+          this.openSnackBar("Name or Password is incorrect. Try again! ", "Fine", {duration: 2000})
         }
       );
   }

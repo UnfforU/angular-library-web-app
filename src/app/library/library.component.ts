@@ -25,11 +25,11 @@ export class LibraryComponent implements OnInit {
   protected librariesList: Library[] = [];
 
   public constructor(
-    public libraryService: LibraryService,
-    protected userService: UserService,
-    private authService: AuthService,
-    private bookService: BookService,
-    private snackBar: MatSnackBar
+    public readonly libraryService: LibraryService,
+    protected readonly userService: UserService,
+    private readonly authService: AuthService,
+    private readonly bookService: BookService,
+    private readonly snackBar: MatSnackBar
   ) {
   }
 
@@ -78,15 +78,15 @@ export class LibraryComponent implements OnInit {
             console.log({library});
             this.librariesList.push(library)
             this.changeAddLibraryMode();
-            this.openSnackBar(`Library: "${library.name}" successfully added!`, "Ok", {duration: 3000});
+            this.openSnackBar(`Library: "${library.name}" successfully added!`, "Ok", {duration: 2000});
           },
           error: () => 
-            this.openSnackBar("Can't add new library. Try Again", "Ok", {duration: 3000})
+            this.openSnackBar("Can't add new library. Try Again", "Ok", {duration: 2000})
         });
   }
   
   protected deleteLibrary(delLibrary: Library): void {
-    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${delLibrary.name}" with all included books?`, "Delete", {duration: 3000});
+    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${delLibrary.name}" with all included books?`, "Delete", {duration: 2000});
     deleteSnackBarRef.onAction()
       .subscribe(()=>{
         this.libraryService.deleteLibrary(delLibrary.libraryId)

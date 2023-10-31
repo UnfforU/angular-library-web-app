@@ -34,12 +34,12 @@ export class BooksComponent {
   }) 
 
   public constructor(
-    public dialog: MatDialog,
-    protected authorService: AuthorService,
-    private bookService: BookService,
-    private fileLoaderService: FileLoaderService,
-    private userService: UserService,
-    private snackBar: MatSnackBar,
+    public readonly dialog: MatDialog,
+    protected readonly authorService: AuthorService,
+    private readonly bookService: BookService,
+    private readonly fileLoaderService: FileLoaderService,
+    private readonly userService: UserService,
+    private readonly snackBar: MatSnackBar,
   ) {
     this.user = this.userService.currUser
   }
@@ -49,6 +49,11 @@ export class BooksComponent {
   }
 
   protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
+
+  protected getConcatAuthors(book: Book): string
+  {
+    return this.authorService.getConcatAuthors(book.authors);
+  }
 
   protected onFileSelected(event: any) {
     const file:File = event.target.files[0];
@@ -89,14 +94,14 @@ export class BooksComponent {
         console.log(`Dialog result: ${result}`);
         console.log(this.bookService.selectedBook);
         this.notifyBookCollectionChanged.emit();
-        this.snackBar.open(`Library: "${this.bookService.selectedBook.name}" successfully added!`, "Ok", {duration: 3000});
+        this.snackBar.open(`Library: "${this.bookService.selectedBook.name}" successfully added!`, "Ok", {duration: 2000});
       }
     });
   }
 
   protected deleteBook(book: Book): void {
     console.log(book);
-    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${book.name}"?`, "Delete", {duration: 3000});
+    let deleteSnackBarRef = this.snackBar.open(`Do you really want to delete: "${book.name}"?`, "Delete", {duration: 2000});
     deleteSnackBarRef.onAction()
       .subscribe(()=>
         this.bookService.deleteBook(book.bookId)

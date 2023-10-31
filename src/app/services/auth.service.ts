@@ -19,9 +19,9 @@ export class AuthService {
 
   public constructor(
     @Inject(REPOS_API_URL) private apiUrl: string,
-    private http: HttpClient,
-    public jwtHelper: JwtHelperService,
-    private router: Router
+    private readonly http: HttpClient,
+    public readonly jwtHelper: JwtHelperService,
+    private readonly router: Router
   ) { 
   }
 

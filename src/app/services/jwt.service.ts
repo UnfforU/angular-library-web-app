@@ -27,7 +27,7 @@ export class JwtService {
       return jwt_decode(token);
     }
     else {
-      return null;
+      return {} as DecodedToken;
     }
   }
 }

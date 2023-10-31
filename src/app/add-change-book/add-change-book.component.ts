@@ -24,9 +24,9 @@ export class AddChangeBookComponent {
   });
 
   public constructor(
-    private bookService: BookService,
-    private authorService: AuthorService,
-    private libraryService: LibraryService
+    private readonly bookService: BookService,
+    private readonly authorService: AuthorService,
+    private readonly libraryService: LibraryService
   ) {
     this.book = this.bookService.selectedBook;
 
@@ -54,10 +54,10 @@ export class AddChangeBookComponent {
           this.filteredAuthorsList = authors
         );
   }
-
-  protected displayFn(author: Author): string {
+  protected displayFilter(author: Author): string {
     return author && author.name ? author.name : '';
   }
+
 
   protected AddChangeFormClosed(title: string, authorName: string, description: string): void {
     let author = this.authorsList.find(author => author.name == authorName);
@@ -69,7 +69,6 @@ export class AddChangeBookComponent {
       if(author)
         updBook.authors.push(author);
 
-      description = description;
       this.bookService.selectedBook = updBook;
       this.bookService.updateBook(updBook)
     }
@@ -92,6 +91,6 @@ export class AddChangeBookComponent {
   }
 
   private _filter(value: string): Author[] {
-    return this.authorsList.filter(author => author.name.toLowerCase().includes(value.toLowerCase()))
+    return this.authorsList.filter(author => author.name.toLowerCase().includes(value.trim().toLowerCase()))
   }
 }

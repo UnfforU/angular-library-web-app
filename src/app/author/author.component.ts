@@ -15,15 +15,18 @@ export class AuthorComponent {
   public authorsList: Author[] = [];
   public addNewAuthorMode: boolean = false;
 
-  public addAuthorForm = new FormGroup({
-    name: new FormControl('', Validators.required)
-  });
+  public addAuthorForm : FormGroup;
 
   constructor(
-    private authorService: AuthorService,
-    private userService: UserService,
-    private snackBar: MatSnackBar,
+    private readonly authorService: AuthorService,
+    private readonly userService: UserService,
+    private readonly snackBar: MatSnackBar,
   ){
+
+    this.addAuthorForm = new FormGroup({
+      authorName: new FormControl('', Validators.required)
+    });
+
     this.authorService.getAuthors()
       .subscribe(authorsList => this.authorsList = authorsList);
   }
@@ -42,10 +45,10 @@ export class AuthorComponent {
           next: (author) => {
             this.authorsList.push(author)
             this.changeAddAuthorMode();
-            this.snackBar.open(`Author: "${author.name}" successfully added!`, "Ok", {duration: 3000});
+            this.snackBar.open(`Author: "${author.name}" successfully added!`, "Ok", {duration: 2000});
           },
           error: () => 
-            this.snackBar.open("Can't add new author. Try Again", "Ok", {duration: 3000})
+            this.snackBar.open("Can't add new author. Try Again", "Ok", {duration: 2000})
         });
   }
 }

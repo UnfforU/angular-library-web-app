@@ -35,11 +35,11 @@ export class BookDetailsComponent {
   protected updateBookFormHidden = true;
 
   constructor(
-    public dialog: MatDialog,
-    protected userService: UserService,
-    protected authorService: AuthorService,
-    private bookService: BookService,
-    private orderService: OrderService,
+    public readonly dialog: MatDialog,
+    protected readonly userService: UserService,
+    protected readonly authorService: AuthorService,
+    private readonly bookService: BookService,
+    private readonly orderService: OrderService,
   ){
     this.book = this.bookService.selectedBook;
     this.sortedOrderList = this.book.orders.sort(order => new Date(order.startDateTime).getTime());
@@ -48,8 +48,8 @@ export class BookDetailsComponent {
 
   protected isAdmin = (): boolean => this.userService.currUser.userRole == UserRole.admin;
   
-  protected myFilter = (d: Date): boolean => {
-    return this.myFilterFunc(d)
+  protected filter = (d: Date): boolean => {
+    return this.filterFunc(d)
   };
 
   protected openAddUpdateForm(): void {
@@ -77,7 +77,7 @@ export class BookDetailsComponent {
       })
   }
 
-  private myFilterFunc(d: Date): boolean {
+  private filterFunc(d: Date): boolean {
     let ordersList = this.bookService.selectedBook.orders;
     var dateRanges: DateRange[] = [];
     ordersList.forEach(order => {
@@ -86,12 +86,7 @@ export class BookDetailsComponent {
         end: this.removeTime(new Date(order.endDateTime))
       });
     });
-    let res = true;
-    dateRanges.forEach(tmp => {
-      if(res && d >= tmp.start && d <= tmp.end)
-        res = false;
-    })
-    return res
+    return dateRanges.some(tmp => d >= tmp.start && d <= tmp.end);
   } 
 
   private addHours(date: Date, hours: number) {
