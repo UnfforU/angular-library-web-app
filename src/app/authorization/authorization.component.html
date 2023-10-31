@@ -1,0 +1,51 @@
+<section class="logIn">
+    <div class="logIn_card">
+        <mat-card>
+            <mat-card-content>
+                <div class="logIn_card_components">
+                    <form 
+                        [formGroup]="authForm"
+                        class="logIn_input" 
+                    >
+                        <mat-form-field 
+                            hideRequiredMarker 
+                            appearance="outline" 
+                            class="logIn_input"
+                        >
+                            <mat-label>Name</mat-label>
+                            <input 
+                                #userName    
+                                formControlName="userName"    
+                                matInput 
+                                required
+                            >            
+                        </mat-form-field>
+                        <mat-form-field 
+                            hideRequiredMarker 
+                            appearance="outline" 
+                            class="logIn_input"
+                        >
+                            <mat-label>Password</mat-label>
+                            <input 
+                                #password
+                                formControlName="password"
+                                matInput 
+                                type="password"
+                                required
+                            >
+                            <mat-hint align="end">Enter your password</mat-hint>
+                        </mat-form-field>   
+                    </form>
+                    <button 
+                        (click)="logIn(userName.value, password.value)" 
+                        class="logIn_button" 
+                        color="primary"
+                        mat-raised-button
+                    >
+                        Log in
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</section>

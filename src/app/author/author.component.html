@@ -1,0 +1,42 @@
+<section class="author_list">
+    <div class="author_list_title_button">
+        <h1 class="author_list_title">Authors</h1>
+        <button 
+            *ngIf="isAdmin()"
+            (click)="changeAddAuthorMode()"
+            mat-icon-button
+        >
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
+    </div>
+
+    <div *ngIf="addNewAuthorMode">
+        <form [formGroup]="addAuthorForm">
+            <mat-form-field>
+                <mat-label>Enter author's name</mat-label>
+                <input 
+                    #authorName
+                    formControlName="authorName"
+                    matInput 
+                    hideRequiredMarker
+                    placeholder="new name"
+                    type="text" 
+                >
+                <button 
+                    (click)="addAuthor(authorName.value)"
+                    mat-icon-button
+                    matSuffix 
+                    aria-label="Add" 
+                >
+                    <mat-icon>check</mat-icon>
+                </button>
+                <mat-error *ngIf="!addAuthorForm.valid">Input can't be empty</mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <mat-list *ngFor="let author of authorsList" role="authors" >
+        <mat-list-item>{{author.name}}</mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
+</section>

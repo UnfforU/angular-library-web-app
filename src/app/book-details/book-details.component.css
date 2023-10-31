@@ -1,0 +1,26 @@
+.book_details_page {
+    width: 800px;
+    height: auto;
+}
+
+.title_block {
+    display: block;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.title {
+    font-size: 2em;
+    display: inline-block;
+    margin-right: 20px;   
+}
+
+.author {
+    text-align: center;
+    font-size: 1em;
+}
+
+mat-form-field {
+    margin-left: 12px;
+    margin-right: 12px;
+}

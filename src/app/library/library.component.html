@@ -1,0 +1,81 @@
+<header>
+    <mat-toolbar 
+        color="primary" 
+        [class.mat-elevation-z10]="true" 
+        [class.mat-elevation-z1]="true"
+    >
+        <span>Web Library</span>
+        <span class="header_spacer"></span>
+        <span class="username">{{getUserName()}}</span>
+        <button mat-raised-button (click)="logOut()">Log out</button>
+    </mat-toolbar>
+</header>
+<mat-divider inset="true"></mat-divider>
+
+<section class="main_content">
+    <section class="libraries">
+        <div class="libraries_list">
+            <div class="libraries_list_title_button">
+                <h1 class="libraries_list_title">Libraries</h1>
+                <button 
+                    *ngIf="isAdmin()"
+                    (click)="changeAddLibraryMode()"
+                    mat-icon-button
+                >
+                    <mat-icon>add_circle_outline</mat-icon>
+                </button>
+            </div>
+        
+            <div *ngIf="addNewLibraryMode && isAdmin()">
+                <form [formGroup]="addLibraryForm">
+                    <mat-form-field>
+                        <mat-label>Enter library name</mat-label>
+                        <input 
+                            #libraryName
+                            formControlName="name"
+                            matInput 
+                            hideRequiredMarker
+                            placeholder="new name"
+                            type="text" 
+                        >
+                        <button 
+                            (click)="addLibrary(libraryName.value)"
+                            mat-icon-button
+                            matSuffix 
+                            aria-label="Add" 
+                        >
+                            <mat-icon>check</mat-icon>
+                        </button>
+                        <mat-error *ngIf="!addLibraryForm.valid">Input can't be empty</mat-error>
+                    </mat-form-field>
+                </form>
+            </div>
+            
+            <mat-action-list *ngFor="let library of librariesList" role="libraries" >
+                <mat-list-item (click)="chooseLibrary(library)">
+                    {{library.name}}
+                    <div matListItemMeta>
+                        <button 
+                            *ngIf="isAdmin()"
+                            (click)="deleteLibrary(library)"
+                            mat-icon-button
+                        >
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-list-item>     
+                <mat-divider></mat-divider>
+            </mat-action-list>
+        </div>
+    </section>
+    <mat-divider vertical="true"></mat-divider>
+    <app-books 
+        [books]="this.libraryService.selectedLibrary.books"
+        [currLibrary]="this.libraryService.selectedLibrary"
+        (notifyBookCollectionChanged)="onNotifyBookCollectionChanged()"
+    >
+    </app-books>
+    <mat-divider vertical="true"></mat-divider>
+    <app-author></app-author>
+</section>
+

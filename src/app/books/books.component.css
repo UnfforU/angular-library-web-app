@@ -1,0 +1,22 @@
+ .books_list_title_button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.books_list_title {
+    display: inline;
+    vertical-align:text-bottom;
+    margin-right: 10px;
+}
+
+.books_list {
+    padding: 10px 20px 0px 30px;
+    display: block;
+    width: 50%;
+    min-width: 800px;
+}
+
+.book_card {
+    width: 700px;
+    margin-bottom: 20px;
+}

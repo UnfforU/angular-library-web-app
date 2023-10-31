@@ -1,0 +1,63 @@
+<div  *ngIf="currLibrary" class="books_list" >
+    <div class="books_list_title_button">
+        <h1 class="books_list_title">Books</h1>
+        <button 
+            *ngIf="isAdmin()"
+            (click)="addBook()"
+            mat-icon-button
+        >
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
+    </div>
+    <mat-card *ngFor="let book of books" class="book_card" >
+        <mat-card-header>
+            <mat-card-title>
+                {{book.name}}
+                <mat-icon *ngIf="book.orders && book.orders.length != 0">bookmark</mat-icon>
+                <button 
+                    (click)="fileInput.click()"
+                    type="button" 
+                    mat-raised-button 
+                >
+                    Choose File
+                </button>
+                <input 
+                    (change)="onFileSelected($event)" 
+                    hidden 
+                    #fileInput 
+                    type="file" 
+                    id="file"
+                >
+                <button
+                    (click)="getFileByBookId(book.bookId)"
+                    type="button" 
+                    mat-raised-button 
+                >
+                    Get File
+                </button>
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{getConcatAuthors(book)}}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{book.description}}</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button 
+                *ngIf="isAdmin()"
+                (click)="deleteBook(book)"
+                mat-icon-button 
+            >
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button 
+                (click)="openBookDetails(book)"
+                mat-raised-button
+                color="primary" 
+            >
+                MORE
+            </button>
+        </mat-card-actions>
+    </mat-card> 
+</div>

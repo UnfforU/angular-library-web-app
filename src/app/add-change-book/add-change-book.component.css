@@ -1,0 +1,21 @@
+.addChangeBook_section {
+    width: 850px;
+    height: auto;
+}
+
+.updateBook_form {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.updateBook_input {
+    width: 80%;
+    height: auto;
+}
+
+.updateBook_button {
+    width: 30%;
+    display: inline-block;
+    margin: 0px 5px 10px 5px;
+}

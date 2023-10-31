@@ -1,0 +1,28 @@
+.header_spacer {
+    flex: 1 1 auto;
+}
+
+.username {
+    font-size: 15px;
+    padding-right: 10px;
+}
+
+.main_content {
+    display: flex;
+}
+
+.libraries {
+    display: flex;
+    min-width: 220px
+}
+
+.libraries_list_title_button {
+    display: block;
+    margin-left: 15px;
+}
+
+.libraries_list_title {
+    display: inline;
+    vertical-align:text-bottom;
+    margin-right: 10px;
+}
